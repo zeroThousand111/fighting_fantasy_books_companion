@@ -1,0 +1,40 @@
+<!-- layout.erb -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+
+    <title>Fighting Fantasy Books Companion</title>
+  </head>
+
+
+  <body>
+    <% if session[:message] %>
+    <p class="message"><%= session.delete(:message) %></p>
+    <% end %>
+
+    <h1 class="title">Fighting Fantasy Books Companion</h1>
+  
+    <br>
+    
+    <div class="attribute-current-status">
+      <p>Current SKILL: <%= session[:current_skill] %> </p>
+      <p>Current STAMINA: <%= session[:current_stamina] %> </p>
+      <p>Current LUCK: <%= session[:current_luck] %> </p>
+    </div>
+
+    <br>
+
+    <%= yield %>
+
+    <br>
+
+    <footer>
+      <p>Made by humans, for humans<p>
+    </footer>
+  </body>
+</html>
