@@ -1,8 +1,66 @@
 /* MAIN CSS */
 
-.message {
-  color: blue;
-  background: yellow;
+/* GLOBAL */
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
-/* GLOBAL */
+img {
+  width: 100%;
+}
+
+/* LAYOUT */
+
+.width-container {
+  max-width: 675px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.reversed-colour-scheme {
+  background-color: rgb(41, 41, 41);
+  color: #fff;
+}
+
+
+.message {
+  color: #fff;
+  background: rgb(255, 0, 0);
+}
+
+/* TYPOGRAPHY */
+
+body {
+  /* Can I find a true Palatino web font? */
+  /* font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif; */
+
+  /* Until I can find proper Palatino for web, I'll use Georgia and this font stack: */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  line-height: 1.2;
+  background-color: rgb(244, 240, 235);
+}
+
+h1 {
+  font-weight: bolder;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-block-end: 1.5rem;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 1.7rem;
+  margin-block-end: 1.5rem;
+}
+
+p {
+  font-size: 1.625rem;
+  margin-block-end: 2rem;
+}
+
+.centred-text {
+  text-align: center;
+}
