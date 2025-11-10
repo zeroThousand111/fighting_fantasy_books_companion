@@ -10,6 +10,7 @@
 
 img {
   width: 100%;
+  display: block;
 }
 
 html {
@@ -25,12 +26,12 @@ html {
 }
 
 .reversed-colour-scheme {
-  background-color: rgb(41, 41, 41);
-  color: #fff;
+  background-color: #403D39;
+  color: #FFFCF2;
 }
 
 header {
-  background-color: rgb(41, 41, 41);
+  background-color: #252422;
 }
 
 nav {
@@ -42,6 +43,19 @@ main {
   margin-block-start: 3rem;
 }
 
+.dice-container {
+  outline: red solid 1px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  height: 150px;
+}
+
+.dice-container > img {
+  /* height: 50px; */
+  outline: blue solid 1px;
+}
+
 /* TYPOGRAPHY */
 
 body {
@@ -51,7 +65,7 @@ body {
   /* Until I can find proper Palatino for web, I'll use Georgia and this font stack: */
   font-family: Georgia, serif;
   line-height: 1.2;
-  background-color: rgb(244, 240, 235);
+  background-color: #FFFCF2;
 }
 
 h1 {
@@ -81,7 +95,17 @@ em {
   padding-block: 1rem;
   font-size: 1.625rem;
   text-decoration: none;
-  color: #fff;
+  color: #CCC5B9;
+}
+
+.nav-item:hover,
+.nav-item:focus {
+  color: rgb(255, 48, 48);
+}
+
+.accented-nav {
+  color: #FFFCF2;
+  font-weight: 900;
 }
 
 .centred-text {
