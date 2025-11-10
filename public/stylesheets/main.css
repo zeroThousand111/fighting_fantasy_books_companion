@@ -29,6 +29,19 @@ html {
   color: #fff;
 }
 
+header {
+  background-color: rgb(41, 41, 41);
+}
+
+nav {
+  max-width: 675px;
+  padding-block: 1rem;
+}
+
+main {
+  margin-block-start: 3rem;
+}
+
 /* TYPOGRAPHY */
 
 body {
@@ -63,6 +76,14 @@ em {
   font-style: italic;
 }
 
+.nav-item {
+  display: block;
+  padding-block: 1rem;
+  font-size: 1.625rem;
+  text-decoration: none;
+  color: #fff;
+}
+
 .centred-text {
   text-align: center;
 }
@@ -79,6 +100,14 @@ em {
 @media (min-width: 600px) {
   html {
     font-size: 16px;
+  }
+
+  nav {
+    margin: 0 auto;
+    padding-inline: 1rem;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
