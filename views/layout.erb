@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/main.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <title>Fighting Fantasy Books Companion</title>
   </head>
 
@@ -18,24 +20,12 @@
     <p class="message"><%= session.delete(:message) %></p>
     <% end %>
 
-    <h1 class="title">Fighting Fantasy Books Companion</h1>
-  
-    <br>
-    
-    <div class="attribute-current-status">
-      <p>Current SKILL: <%= session[:current_skill] %> </p>
-      <p>Current STAMINA: <%= session[:current_stamina] %> </p>
-      <p>Current LUCK: <%= session[:current_luck] %> </p>
-    </div>
-
-    <br>
-
     <%= yield %>
 
     <br>
 
     <footer>
-      <p>Made by humans, for humans<p>
+      <p class="centred-text">Made by humans, for humans<p>
     </footer>
   </body>
 </html>

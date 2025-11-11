@@ -92,6 +92,10 @@ get "/input/manual" do
   erb :input
 end
 
+get "/help" do
+  erb :help
+end
+
 post "/input/manual" do
   array_of_attribute_strings = [
     params[:starting_skill],
