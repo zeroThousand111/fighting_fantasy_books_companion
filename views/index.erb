@@ -6,18 +6,19 @@
     <a href="#" class="nav-item">Inventory</a>
     <a href="/help" class="nav-item">Help</a>
   </nav>
+
 </header>
 
 <main>
 
-  <div class="centred-text dice-container width-container">
-    <img src="/images/dice-6-svgrepo-com.svg" id="left-die" alt="A 3D six-sided die facing with the six side up">
-    <img src="/images/dice-6-svgrepo-com.svg" id="right-die" alt="A 3D six-sided die facing with the six side up">
-  </div>
+  <h1 class="centred-text">Fighting Fantasy Companion</h1>
+  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
 
-  <div class="centred-text">
-    <h1>Fighting Fantasy Companion</h1>
-    <p>Here is your <em>adventure sheet</em>!</p>
+  <div class="dice-container width-container">
+    <img src="/images/<%= DICE_ICONS[@die1] %>" id="left-die" alt="A 3D six-sided die facing with the six side up">
+    <img src="/images/<%= DICE_ICONS[@die2] %>" id="right-die" alt="A 3D six-sided die facing with the six side up">
+    <h2> <%= @die1 %> </p>
+    <h2> <%= @die2 %> </p>
   </div>
 
   <section>

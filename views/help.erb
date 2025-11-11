@@ -9,15 +9,14 @@
 
 <main>
 
-  <div class="centred-text dice-container width-container">
-    <img src="/images/dice-6-svgrepo-com.svg" id="left-die" alt="A 3D six-sided die facing with the six side up">
-    <img src="/images/dice-6-svgrepo-com.svg" id="right-die" alt="A 3D six-sided die facing with the six side up">
-  </div>
-
-
   <h1 class="centred-text">Help Page</h1>
 
-
+  <div class="dice-container width-container">
+    <img src="/images/<%= DICE_ICONS[@die1] %>" id="left-die" alt="A 3D six-sided die facing with the six side up">
+    <img src="/images/<%= DICE_ICONS[@die2] %>" id="right-die" alt="A 3D six-sided die facing with the six side up">
+    <h2> <%= @die1 %> </p>
+    <h2> <%= @die2 %> </p>
+  </div>
 
   <section>
     <div class="width-container">
@@ -34,6 +33,8 @@
       <p>You can track your SKILL, STAMINA and LUCK scores, your gold and the items in your backpack.  You can choose to enter your starting SKILL, STAMINA and LUCK scores manually or generate randomised values at the start of your adventure.  You can also update them as they change through the game.</p>
 
       <p>The app has been designed for a mobile-first experience, but will adapt to fill larger screens.</p>
+
+      <p>Dice icons by <a href="https://www.svgrepo.com/svg/480669/dice-2">Icooon Mono</a>.</p>
 
     </div>
   </section>

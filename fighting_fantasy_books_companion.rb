@@ -25,6 +25,15 @@ require "tilt/erubi"
 
 # Constants
 
+DICE_ICONS = {
+  1 => "dice-1-svgrepo-com.svg",
+  2 => "dice-2-svgrepo-com.svg",
+  3 => "dice-3-svgrepo-com.svg",
+  4 => "dice-4-svgrepo-com.svg",
+  5 => "dice-5-svgrepo-com.svg",
+  6 => "dice-6-svgrepo-com.svg"
+}.freeze
+
 # Config
 
 configure do
@@ -42,6 +51,11 @@ end
 
 def two_d6
   rand(2..12)
+end
+
+def roll_two_random_dice_for_tray
+  @die1 = one_d6
+  @die2 = one_d6
 end
 
 ## Attribute Generators
@@ -81,10 +95,12 @@ end
 # Routes
 
 get "/" do
+  roll_two_random_dice_for_tray
   redirect "/index"
 end
 
 get "/index" do
+  roll_two_random_dice_for_tray
   erb :index
 end
 
@@ -93,6 +109,7 @@ get "/input/manual" do
 end
 
 get "/help" do
+  roll_two_random_dice_for_tray
   erb :help
 end
 

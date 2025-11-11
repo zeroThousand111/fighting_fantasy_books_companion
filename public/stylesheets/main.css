@@ -48,10 +48,14 @@ main {
 }
 
 .dice-container {
+  margin-block-start: 20px;
   margin-block-end: 20px;
   margin-inline: auto;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
   width: 150px;
 }
 
@@ -95,6 +99,10 @@ p {
 
 em {
   font-style: italic;
+}
+
+a {
+  color: rgb(255, 48, 48);
 }
 
 .nav-item {
