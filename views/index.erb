@@ -2,24 +2,25 @@
 <header>
   <nav class="centred-text">
     <a href="/" class="nav-item accented-nav">Reload/Reroll</a>
-    <a href="#" class="nav-item">Create New Stats</a>
+    <a href="#" class="nav-item">Stats</a>
     <a href="#" class="nav-item">Inventory</a>
+    <a href="#" class="nav-item">Bookmark</a>
     <a href="/help" class="nav-item">Help</a>
   </nav>
-
 </header>
 
 <main>
 
   <h1 class="centred-text">Fighting Fantasy Companion</h1>
-  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
-
+  
   <div class="dice-container width-container">
     <img src="/images/<%= DICE_ICONS[@die1] %>" id="left-die" alt="A 3D six-sided die facing with the six side up">
     <img src="/images/<%= DICE_ICONS[@die2] %>" id="right-die" alt="A 3D six-sided die facing with the six side up">
-    <h2> <%= @die1 %> </p>
-    <h2> <%= @die2 %> </p>
+    <h2 class="die-roll-result"> <%= @die1 %> </p>
+    <h2 class="die-roll-result"> <%= @die2 %> </p>
   </div>
+
+  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
 
   <section>
     <div class="width-container">
