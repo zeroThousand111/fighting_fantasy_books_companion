@@ -19,10 +19,14 @@ html {
 
 /* LAYOUT */
 
+section {
+  padding-block: 2rem;
+}
+
 .width-container {
   max-width: 675px;
   margin: 0 auto;
-  padding: 2rem;
+  padding-inline: 2rem;
 }
 
 .reversed-colour-scheme {
@@ -44,16 +48,19 @@ main {
 }
 
 .dice-container {
-  outline: red solid 1px;
-  margin: 0 auto 20px;
+  margin-block-end: 20px;
+  margin-inline: auto;
   display: flex;
   justify-content: center;
-  height: 150px;
+  width: 150px;
 }
 
 .dice-container > img {
-  /* height: 50px; */
-  outline: blue solid 1px;
+  height: 50px;
+}
+
+#left-die {
+  align-self: stretch;
 }
 
 /* TYPOGRAPHY */
@@ -112,6 +119,13 @@ em {
   text-align: center;
 }
 
+.inventory-list > li {
+  font-family: "Shadows Into Light", cursive;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 1.625rem;
+}
+
 .message {
   color: #fff;
   background: rgb(255, 0, 0);
@@ -132,6 +146,13 @@ em {
     max-width: 1000px;
     display: flex;
     justify-content: space-between;
+  }
+  .dice-container {
+    width: 300px;
+  }
+
+  .dice-container > img {
+    height: 100px;
   }
 }
 
