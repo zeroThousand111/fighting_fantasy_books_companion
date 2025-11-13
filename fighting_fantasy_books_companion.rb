@@ -95,13 +95,17 @@ end
 # Routes
 
 get "/" do
-  roll_two_random_dice_for_tray
   redirect "/index"
 end
 
 get "/index" do
   roll_two_random_dice_for_tray
   erb :index
+end
+
+get "/stats" do
+  roll_two_random_dice_for_tray
+  erb :stats
 end
 
 get "/input/manual" do
@@ -140,17 +144,24 @@ post "/input/manual" do
   end
 end
 
-get "/input/random" do
-  erb :random
-end
+# get "/input/random" do
+#   # erb :random
+# end
 
-post "/input/random" do
+post "/stats/input-random" do
   session[:starting_skill] = random_starting_skill_or_luck
   session[:starting_stamina] = random_starting_stamina
   session[:starting_luck] = random_starting_skill_or_luck
+  # Is this syntax correct for assignment?
   session[:current_skill] = params[:starting_skill]
   session[:current_stamina] = params[:starting_stamina]
   session[:current_luck] = params[:starting_luck]
+
+  # Does it need these instance variables to display them in front end?
+  # How to retrieve above values from params?
+  @current_skill = params[:current_skill]
+  @current_stamina = 
+  @current_luck = 
   
   redirect "/index"
 end

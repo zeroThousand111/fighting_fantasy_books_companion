@@ -60,6 +60,15 @@ main {
   width: 200px;
 }
 
+.stats-display {
+  align-items: center;
+  justify-items: center;
+}
+
+footer {
+  padding-block: 1rem;
+}
+
 /* TYPOGRAPHY */
 
 body {
@@ -128,11 +137,18 @@ a {
 }
 
 /* a variation of the h2 style */
+
+.stat-value,
 .die-roll-result {
   margin-block-end: 0;
   display: block;
   align-self: center;
   font-size: 3rem;
+}
+
+.stat-title {
+  align-self: center;
+  font-size: 2rem;
 }
 
 .message {
@@ -161,6 +177,12 @@ a {
   }
   .dice-container {
     width: 350px;
+  }
+
+  .stats-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
   }
 }
 
