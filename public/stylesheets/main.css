@@ -153,16 +153,15 @@ a {
     margin: 0 auto;
     padding-inline: 1rem;
     max-width: 1000px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    /* change number of columns to number of nav items in navigation */
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+    align-content: center;
   }
   .dice-container {
     width: 350px;
   }
-
-  /* .dice-container > img {
-    height: 100px;
-  } */
 }
 
 /* Add some grid properties to create columns in desktop-width displays */
