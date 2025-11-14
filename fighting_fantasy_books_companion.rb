@@ -83,6 +83,10 @@ end
 
 ## Input Collection and Validation
 
+def invalid_bookmark_value?(bookmark_value)
+  bookmark_value.to_i <= 0 || bookmark_value.to_i > 400
+end
+
 def missing_attribute?(array_of_attribute_strings)
   array_of_attribute_strings.any? { |attribute| attribute.nil? }
 end
@@ -117,16 +121,21 @@ end
 
 get "/bookmark" do
   roll_two_random_dice_for_tray
-  # temp value for :bookmark session variable - delete this line later
-  # session[:bookmark] = "400"
-  # p session[:bookmark]
+  session[:bookmark] ||= "0"
+
   erb :bookmark
 end
 
 post "/bookmark" do
-  p params[:updated_bookmark]
-  p session[:bookmark] = params[:updated_bookmark]
-  redirect "/bookmark"
+  bookmark_value = params[:updated_bookmark]
+  
+  if invalid_bookmark_value?(bookmark_value)
+    session[:message] = "Sorry, the section number should be above zero and less than 401."
+    redirect "/bookmark"
+  else
+    session[:bookmark] = params[:updated_bookmark]
+    redirect "/bookmark"
+  end
 end
 
 get "/input/manual" do
@@ -138,7 +147,11 @@ get "/help" do
   erb :help
 end
 
-post "/input/manual" do
+get "/stats/input-manual" do
+  erb :input
+end
+
+post "/stats/input-manual" do
   array_of_attribute_strings = [
     params[:starting_skill],
     params[:starting_stamina],
@@ -179,8 +192,5 @@ post "/stats/input-random" do
   redirect "/stats"
 end
 
-get "/update" do
-  "This is a placeholder response"
-end
 
 

@@ -155,9 +155,15 @@ a {
   font-size: 2rem;
 }
 
+.bookmark-value {
+  font-size: 5rem;
+}
+
 .message {
   color: #fff;
-  background: rgb(255, 0, 0);
+  background: rgb(255, 48, 48);
+  margin: 0;
+  padding-block: 5rem;
 }
 
 /* ELEMENTS */
@@ -177,6 +183,14 @@ button:focus,
 .link-button:hover,
 .link-button:focus {
   color: rgb(255, 48, 48);
+}
+
+input {
+  display: block;
+  font-family: inherit;
+  font-size: 4rem;
+  width: 25%;
+  margin: 0 auto;
 }
 
 /* MEDIA QUERIES */

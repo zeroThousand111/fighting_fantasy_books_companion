@@ -21,18 +21,17 @@
     <h2 class="die-roll-result"> <%= @die2 %> </h2>
   </div>
 
-  <section class="width-container">
-    <h2 class="centred-text"> Current Book Section: <%= session[:bookmark] %> </h2>
+  <section class="width-container centred-text">
+    <h2> Current Book Section: </h2>
+    <h2 class="bookmark-value"> <%= session[:bookmark] %> </h2>
   </section>
 
-  <section class="width-container">
+  <section class="width-container centred-text">
     <h2 class="centred-text"> Update Bookmark:</h2>
     <form action="/bookmark" method="post" class="centred-text" name="updated_bookmark">
-      <input id="updated_bookmark" type="number" value="<%= session[:bookmark]%>"/>
+      <div class="centred-text"><input name="updated_bookmark" type="number" value="<%= session[:bookmark]%>" min="1" max="400"/></div>
       <button class="reversed-colour-scheme" type="submit">Update Bookmark</button>
     </form>
   </section>
-
-
 
 </main>
