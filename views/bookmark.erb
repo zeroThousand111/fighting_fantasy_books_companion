@@ -22,8 +22,17 @@
   </div>
 
   <section class="width-container">
-    <h2 class="centred-text"> Current Book Section: <%= session[:bookmark]%> </h2>
+    <h2 class="centred-text"> Current Book Section: <%= session[:bookmark] %> </h2>
   </section>
+
+  <section class="width-container">
+    <h2 class="centred-text"> Update Bookmark:</h2>
+    <form action="/bookmark" method="post" class="centred-text" name="updated_bookmark">
+      <input id="updated_bookmark" type="number" value="<%= session[:bookmark]%>"/>
+      <button class="reversed-colour-scheme" type="submit">Update Bookmark</button>
+    </form>
+  </section>
+
 
 
 </main>

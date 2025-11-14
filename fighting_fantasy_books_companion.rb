@@ -41,6 +41,13 @@ configure do
   set :session_secret, SecureRandom.hex(32)
 end
 
+# Before Actions
+
+before do
+  # creates an empty array value for :inventory unless it already exists
+  session[:inventory] ||= []
+end
+
 # Helper Methods
 
 ## Random Number Generators
@@ -111,12 +118,15 @@ end
 get "/bookmark" do
   roll_two_random_dice_for_tray
   # temp value for :bookmark session variable - delete this line later
-  session[:bookmark] = "400"
+  # session[:bookmark] = "400"
+  # p session[:bookmark]
   erb :bookmark
 end
 
 post "/bookmark" do
-  session[:bookmark] = params[:bookmark]
+  p params[:updated_bookmark]
+  p session[:bookmark] = params[:updated_bookmark]
+  redirect "/bookmark"
 end
 
 get "/input/manual" do
