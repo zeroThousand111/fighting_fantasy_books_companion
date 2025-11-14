@@ -75,12 +75,6 @@ def random_starting_stamina
   12 + two_d6
 end
 
-## Fight Generators
-
-def attack_strength
-  two_d6 # + player skill or monster skill
-end
-
 ## Input Collection and Validation
 
 def invalid_bookmark_value?(bookmark_value)
@@ -148,7 +142,7 @@ get "/help" do
 end
 
 get "/stats/input-manual" do
-  erb :input
+  erb :stats_manual_input
 end
 
 post "/stats/input-manual" do
@@ -158,8 +152,6 @@ post "/stats/input-manual" do
     params[:starting_luck]
   ]
 
-  # array_of_attribute_integers = array_of_attribute_strings.map { |attribute| attribute.to_i }
-
   if missing_attribute?(array_of_attribute_strings)
     session[:message] = "Sorry, one or more attributes are missing."
     redirect "/input"
@@ -167,10 +159,6 @@ post "/stats/input-manual" do
     session[:message] = "Sorry, one or more attributes are outside the valid ranges."
     redirect "/input"
   else # all OK - store attributes in session hash and redirect to /index
-    session[:starting_skill] = params[:starting_skill]
-    session[:starting_stamina] = params[:starting_stamina]
-    session[:starting_luck] = params[:starting_luck]
-
     session[:current_skill] = params[:starting_skill]
     session[:current_stamina] = params[:starting_stamina]
     session[:current_luck] = params[:starting_luck]
@@ -181,13 +169,9 @@ end
 # Generates random stat values from button on "/stats"
 
 post "/stats/input-random" do
-  session[:starting_skill] = random_starting_skill_or_luck
-  session[:starting_stamina] = random_starting_stamina
-  session[:starting_luck] = random_starting_skill_or_luck
-
-  session[:current_skill] = session[:starting_skill]
-  session[:current_stamina] = session[:starting_stamina]
-  session[:current_luck] = session[:starting_luck]
+  session[:current_skill] = random_starting_skill_or_luck
+  session[:current_stamina] = random_starting_stamina
+  session[:current_luck] = random_starting_skill_or_luck
 
   redirect "/stats"
 end

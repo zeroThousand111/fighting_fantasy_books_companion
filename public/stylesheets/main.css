@@ -172,6 +172,8 @@ button,
 .link-button {
   background-color: #403D39;
   color: #fff;
+  font-family: inherit;
+  text-decoration: none;
   margin-block: 5rem;
   font-size: 1.5rem;
   padding: 2rem;
