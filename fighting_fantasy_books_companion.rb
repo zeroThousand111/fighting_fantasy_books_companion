@@ -108,6 +108,17 @@ get "/stats" do
   erb :stats
 end
 
+get "/bookmark" do
+  roll_two_random_dice_for_tray
+  # temp value for :bookmark session variable - delete this line later
+  session[:bookmark] = "400"
+  erb :bookmark
+end
+
+post "/bookmark" do
+  session[:bookmark] = params[:bookmark]
+end
+
 get "/input/manual" do
   erb :input
 end
