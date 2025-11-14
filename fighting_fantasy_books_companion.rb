@@ -144,26 +144,18 @@ post "/input/manual" do
   end
 end
 
-# get "/input/random" do
-#   # erb :random
-# end
+# Generates random stat values from button on "/stats"
 
 post "/stats/input-random" do
   session[:starting_skill] = random_starting_skill_or_luck
   session[:starting_stamina] = random_starting_stamina
   session[:starting_luck] = random_starting_skill_or_luck
-  # Is this syntax correct for assignment?
-  session[:current_skill] = params[:starting_skill]
-  session[:current_stamina] = params[:starting_stamina]
-  session[:current_luck] = params[:starting_luck]
 
-  # Does it need these instance variables to display them in front end?
-  # How to retrieve above values from params?
-  @current_skill = params[:current_skill]
-  @current_stamina = 
-  @current_luck = 
-  
-  redirect "/index"
+  session[:current_skill] = session[:starting_skill]
+  session[:current_stamina] = session[:starting_stamina]
+  session[:current_luck] = session[:starting_luck]
+
+  redirect "/stats"
 end
 
 get "/update" do

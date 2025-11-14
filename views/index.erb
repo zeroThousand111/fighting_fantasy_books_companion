@@ -24,12 +24,9 @@
 
   <div class="reversed-colour-scheme">
     <section class="stats-display width-container">
-      <h2 class="stat-title"> SKILL </h2>
-      <h2 class="stat-title"> STAMINA </h2>
-      <h2 class="stat-title"> LUCK </h2>
-      <h2 class="stat-value"> <%= @current_skill %> </h2>
-      <h2 class="stat-value"> <%= @starting_stamina %> </h2>
-      <h2 class="stat-value"> <%= @current_luck %> </h2>
+      <h2 class="stat-title"> SKILL: <%= session[:current_skill] %> </h2>
+      <h2 class="stat-title"> STAMINA: <%= session[:current_stamina] %> </h2>
+      <h2 class="stat-title"> LUCK: <%= session[:current_luck] %></h2>
     </section>
   </div>
 

@@ -61,6 +61,9 @@ main {
 }
 
 .stats-display {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* align-content: baseline; */
   align-items: center;
   justify-items: center;
 }
@@ -138,7 +141,6 @@ a {
 
 /* a variation of the h2 style */
 
-.stat-value,
 .die-roll-result {
   margin-block-end: 0;
   display: block;
@@ -148,12 +150,33 @@ a {
 
 .stat-title {
   align-self: center;
+  margin-block-end: 0;
+  padding-block: 0.5rem;
   font-size: 2rem;
 }
 
 .message {
   color: #fff;
   background: rgb(255, 0, 0);
+}
+
+/* ELEMENTS */
+
+button,
+.link-button {
+  background-color: #403D39;
+  color: #fff;
+  margin-block: 5rem;
+  font-size: 1.5rem;
+  padding: 2rem;
+  border-radius: 2rem;
+}
+
+button:hover,
+button:focus,
+.link-button:hover,
+.link-button:focus {
+  color: rgb(255, 48, 48);
 }
 
 /* MEDIA QUERIES */
@@ -180,9 +203,8 @@ a {
   }
 
   .stats-display {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    max-width: 800px;
   }
 }
 

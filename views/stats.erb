@@ -23,20 +23,19 @@
 
   <div class="reversed-colour-scheme">
     <section class="stats-display width-container">
-      <h2 class="stat-title"> SKILL </h2>
-      <h2 class="stat-title"> STAMINA </h2>
-      <h2 class="stat-title"> LUCK </h2>
-      <h2 class="stat-value"> <%= @current_skill %> </h2>
-      <h2 class="stat-value"> <%= @current_stamina %> </h2>
-      <h2 class="stat-value"> <%= @current_luck %> </h2>
+      <h2 class="stat-title"> SKILL: <%= session[:current_skill] %> </h2>
+      <h2 class="stat-title"> STAMINA: <%= session[:current_stamina] %> </h2>
+      <h2 class="stat-title"> LUCK: <%= session[:current_luck] %></h2>
     </section>
   </div>
 
-  <section class="width-container">
+  <section class="width-container centred-text">
 
-    <form action="/stats/input-random" method="post">
-      <button class="centred-text" type="submit"><p>Press Here For Random Stats</p></button>
+    <form action="/stats/input-random" method="post" class="centred-text">
+      <button class="reversed-colour-scheme" type="submit">Create Random Stats</button>
     </form>
+
+    <a class="link-button">Manually Create or Update Stats</a>
 
   </section>
 
