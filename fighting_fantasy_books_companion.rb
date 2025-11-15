@@ -93,8 +93,8 @@ def validate_manual_starting_stamina(attribute)
   (14..24).cover?(attribute.to_i)
 end
 
-def validate_manual_starting_attributes(score) # return false unless all three attributes are within correct ranges
-  validate_manual_starting_skill_and_luck(session[:starting_skill]) && validate_manual_starting_stamina(session[:starting_stamina]) && validate_manual_starting_skill_and_luck(session[:starting_luck])
+def validate_manual_starting_attributes(array_of_attribute_strings) # return false unless all three attributes are within correct ranges
+  validate_manual_starting_skill_and_luck(array_of_attribute_strings[0]) && validate_manual_starting_stamina(array_of_attribute_strings[1]) && validate_manual_starting_skill_and_luck(array_of_attribute_strings[2])
 end
 
 # Routes
@@ -111,6 +111,42 @@ end
 get "/stats" do
   roll_two_random_dice_for_tray
   erb :stats
+end
+
+get "/stats/input-manual" do
+  erb :stats_manual_input
+end
+
+post "/stats/input-manual" do
+  array_of_attribute_strings = [
+    params[:new_skill],
+    params[:new_stamina],
+    params[:new_luck]
+  ]
+  p array_of_attribute_strings
+
+  if missing_attribute?(array_of_attribute_strings)
+    session[:message] = "Sorry, one or more attributes are missing."
+    redirect "/stats/input-manual"
+  elsif !validate_manual_starting_attributes(array_of_attribute_strings) # true if one or more attributes are outside the allowed starting ranges
+    session[:message] = "Sorry, one or more attributes are outside the valid ranges."
+    redirect "/stats/input-manual"
+  else # all OK - store attributes in session hash and redirect to /index
+    session[:current_skill] = params[:new_skill]
+    session[:current_stamina] = params[:new_stamina]
+    session[:current_luck] = params[:new_luck]
+    redirect "/index"
+  end
+end
+
+# Generates random stat values from button on "/stats"
+
+post "/stats/input-random" do
+  session[:current_skill] = random_starting_skill_or_luck
+  session[:current_stamina] = random_starting_stamina
+  session[:current_luck] = random_starting_skill_or_luck
+
+  redirect "/stats"
 end
 
 get "/bookmark" do
@@ -132,49 +168,12 @@ post "/bookmark" do
   end
 end
 
-get "/input/manual" do
-  erb :input
-end
-
 get "/help" do
   roll_two_random_dice_for_tray
   erb :help
 end
 
-get "/stats/input-manual" do
-  erb :stats_manual_input
-end
 
-post "/stats/input-manual" do
-  array_of_attribute_strings = [
-    params[:starting_skill],
-    params[:starting_stamina],
-    params[:starting_luck]
-  ]
-
-  if missing_attribute?(array_of_attribute_strings)
-    session[:message] = "Sorry, one or more attributes are missing."
-    redirect "/input"
-  elsif !validate_manual_starting_attributes(array_of_attribute_strings) # true if one or more attributes are outside the allowed starting ranges
-    session[:message] = "Sorry, one or more attributes are outside the valid ranges."
-    redirect "/input"
-  else # all OK - store attributes in session hash and redirect to /index
-    session[:current_skill] = params[:starting_skill]
-    session[:current_stamina] = params[:starting_stamina]
-    session[:current_luck] = params[:starting_luck]
-    redirect "/index"
-  end
-end
-
-# Generates random stat values from button on "/stats"
-
-post "/stats/input-random" do
-  session[:current_skill] = random_starting_skill_or_luck
-  session[:current_stamina] = random_starting_stamina
-  session[:current_luck] = random_starting_skill_or_luck
-
-  redirect "/stats"
-end
 
 
 

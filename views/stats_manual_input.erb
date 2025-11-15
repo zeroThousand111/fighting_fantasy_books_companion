@@ -1,12 +1,14 @@
+<!-- stats_manual_input.erb -->
+
 <section class="width-container centred-text">
 
 <form action="/stats/input-manual" method="post">
-  <label for="starting_skill">Enter your starting SKILL:</label>
-  <input type="number" name="starting_skill" max="12" min="7" value ="<%= session[:current_skill] %>">
-  <label for="starting_stamina">Enter your starting STAMINA:</label>
-  <input type="number" name="starting_stamina" max="24" min="14" value ="<%= session[:current_stamina] %>">
-  <label for="starting_luck">Enter your starting LUCK:</label>
-  <input type="number" name="starting_luck" max="12" min="7" value ="<%= session[:current_luck] %>">
+  <label for="new_skill">Enter your starting SKILL:</label>
+  <input type="number" name="new_skill" max="12" min="7" value ="<%= session[:current_skill] %>">
+  <label for="new_stamina">Enter your starting STAMINA:</label>
+  <input type="number" name="new_stamina" max="24" min="14" value ="<%= session[:current_stamina] %>">
+  <label for="new_luck">Enter your starting LUCK:</label>
+  <input type="number" name="new_luck" max="12" min="7" value ="<%= session[:current_luck] %>">
   <button type="submit">Submit</button>
 </form>
 
