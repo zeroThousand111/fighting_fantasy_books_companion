@@ -28,7 +28,11 @@ end
 
 before do
   # creates an empty array value for :inventory unless it already exists
-  session[:inventory] ||= []
+  session[:inventory] ||= ["Backpack", "Leather Armour", "Sword", "Packed Lunch"]
+  @inventory = session[:inventory]
+  # sets initial values for some session variables for a new session, but doesn't reassign if these keys already have a value assigned to them
+  session[:bookmark] ||= "1"
+  session[:gold] ||= "0"
 end
 
 # Helper Methods
@@ -145,8 +149,6 @@ end
 
 get "/bookmark" do
   roll_two_random_dice_for_tray
-  session[:bookmark] ||= "1"
-
   erb :bookmark
 end
 
@@ -164,7 +166,6 @@ end
 
 get "/inventory" do
   roll_two_random_dice_for_tray
-  session[:gold] ||= "0"
   erb :inventory
 end
 

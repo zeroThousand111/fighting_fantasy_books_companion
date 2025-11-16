@@ -35,41 +35,18 @@
     <h2 class="bookmark-value"> <%= session[:bookmark] %> </h2>
   </section>
 
-  <section>
-    <div class="width-container">
-
-      <h2 class="centred-text">Restoring Skill, Stamina and Luck</h2>
-
-      <p>You follow the cavern wall all the way around until</p>
-      <p>You will often come across pages in the book which</p>
-      <p><strong>The above lines should be almost exactly one width wide if we are matching the FF books typesetting.</strong></p>
-      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
-
-      <h2 class="centred-text">Fighting More Than One Creature</h2>
-  
-      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
-
-    </div>
+  <section class="width-container centred-text">
+    <h2> Current Gold Pieces: </h2>
+    <h2 class="bookmark-value"> <%= session[:gold] %> </h2>
   </section>
 
-  <section class="reversed-colour-scheme">
-      <div class="width-container">
-
-        <h2 class="centred-text">Fighting More Than One Creature</h2>
-
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
-      </div>
-  </section>
-
-  <section>
-    <div class="width-container">
-      <h2 class="centred-text">Inventory</h2>
-      <ul class="inventory-list">
-        <li>Something</li>
-        <li>Something else...</li>
-        <li>Last thing.</li>
-      </ul>
-    </div>
+  <section class="width-container centred-text">
+    <h2> Inventory:</h2>
+    <ul class="inventory-list">
+      <% @inventory.each do |item| %>
+        <li class="inventory-item"> <%= item %> </li>
+      <% end %>
+    </ul>
   </section>
 
 </main>

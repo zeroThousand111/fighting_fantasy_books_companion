@@ -30,17 +30,27 @@
     </section>
   </div>
 
- <section class="width-container centred-text">
+  <section class="width-container centred-text">
     <h2> Current Gold Pieces: </h2>
     <h2 class="bookmark-value"> <%= session[:gold] %> </h2>
   </section>
 
   <section class="width-container centred-text">
-    <h2 class="centred-text"> Update Gold Pieces:</h2>
+    <h2> Update Gold Pieces:</h2>
     <form action="/inventory" method="post" class="centred-text" min="0" name="updated_gold">
       <div class="centred-text"><input name="updated_gold" type="number" value="<%= session[:gold] %>"/></div>
       <button class="reversed-colour-scheme" type="submit">Update Gold</button>
     </form>
   </section>
+
+  <section class="width-container centred-text">
+    <h2> Inventory:</h2>
+    <ul class="inventory-list">
+      <% @inventory.each do |item| %>
+        <li class="inventory-item"> <%= item %> </li>
+      <% end %>
+    </ul>
+  </section>
+
 
 </main>

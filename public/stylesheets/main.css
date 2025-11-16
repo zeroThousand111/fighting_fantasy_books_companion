@@ -69,7 +69,9 @@ main {
 }
 
 footer {
-  padding-block: 1rem;
+  background-color: #252422;
+  color: #FFFCF2;
+  padding-block: 2rem;
 }
 
 /* TYPOGRAPHY */
@@ -132,11 +134,11 @@ a {
   text-align: center;
 }
 
-.inventory-list > li {
+.inventory-item {
   font-family: "Shadows Into Light", cursive;
-  line-height: 1.5;
   font-weight: 400;
-  font-size: 1.625rem;
+  font-size: 3rem;
+  line-height: 1.5;
 }
 
 /* a variation of the h2 style */
@@ -160,7 +162,7 @@ a {
 }
 
 .message {
-  color: #fff;
+  color: #FFFCF2;
   background: rgb(255, 48, 48);
   margin: 0;
   padding-block: 5rem;
@@ -171,7 +173,7 @@ a {
 button,
 .link-button {
   background-color: #403D39;
-  color: #fff;
+  color: #FFFCF2;
   font-family: inherit;
   text-decoration: none;
   margin-block: 5rem;
@@ -193,6 +195,10 @@ input {
   font-size: 4rem;
   width: 25%;
   margin: 0 auto;
+}
+
+.footer-paragraph {
+  margin-block-start: 2rem;
 }
 
 /* MEDIA QUERIES */
