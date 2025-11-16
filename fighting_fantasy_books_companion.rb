@@ -1,22 +1,5 @@
 # fighting_fantasy_books_companion.rb
 
-=begin
-FEATURES
-+ track status of skill/stamina/luck scores
-+ allow player to input scores manually
-- allow random generation of starting scores
-
-
-DEVELOPMENT IDEAS
-+ validate that no attribute score is missing
-+ validate starting attribute scores (they may go outside this range during play):
-  + skill between 7 and 12
-  + stamina between 14 and 24
-  + luck between 7 and 12
-- 
-- attributes can go down, but rarely can go above the starting value
-=end
-
 # Require Dependencies
 
 require "sinatra"
@@ -77,24 +60,36 @@ end
 
 ## Input Collection and Validation
 
-def invalid_bookmark_value?(bookmark_value)
-  bookmark_value.to_i <= 0 || bookmark_value.to_i > 400
+def is_not_an_empty_string?(string)
+  string != ""
+end
+
+def is_a_numeric_string?(string)
+  string.chars.all? { |char| char.match?(/\d/) }
+end
+
+def valid_bookmark_value?(bookmark_value)
+  bookmark_value.to_i > 0 && bookmark_value.to_i < 401 && is_a_numeric_string?(bookmark_value) && is_not_an_empty_string?(bookmark_value)
+end
+
+def valid_gold_value?(gold_value)
+  gold_value.to_i >= 0 && is_a_numeric_string?(gold_value) && is_not_an_empty_string?(gold_value)
 end
 
 def missing_attribute?(array_of_attribute_strings)
   array_of_attribute_strings.any? { |attribute| attribute.nil? }
 end
 
-def validate_manual_starting_skill_and_luck(attribute)
-  (7..12).cover?(attribute.to_i)
+def valid_manual_skill_and_luck?(attribute)
+  (7..12).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
 end
 
-def validate_manual_starting_stamina(attribute)
-  (14..24).cover?(attribute.to_i)
+def valid_manual_stamina?(attribute)
+  (14..24).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
 end
 
-def validate_manual_starting_attributes(array_of_attribute_strings) # return false unless all three attributes are within correct ranges
-  validate_manual_starting_skill_and_luck(array_of_attribute_strings[0]) && validate_manual_starting_stamina(array_of_attribute_strings[1]) && validate_manual_starting_skill_and_luck(array_of_attribute_strings[2])
+def valid_manual_attributes?(array_of_attribute_strings) # return false unless all three attributes are within correct ranges
+  valid_manual_skill_and_luck?(array_of_attribute_strings[0]) && valid_manual_stamina?(array_of_attribute_strings[1]) && valid_manual_skill_and_luck?(array_of_attribute_strings[2])
 end
 
 # Routes
@@ -123,19 +118,18 @@ post "/stats/input-manual" do
     params[:new_stamina],
     params[:new_luck]
   ]
-  p array_of_attribute_strings
 
-  if missing_attribute?(array_of_attribute_strings)
+  if missing_attribute?(array_of_attribute_strings) # true if one or more attributes are nil or an empty string
     session[:message] = "Sorry, one or more attributes are missing."
     redirect "/stats/input-manual"
-  elsif !validate_manual_starting_attributes(array_of_attribute_strings) # true if one or more attributes are outside the allowed starting ranges
+  elsif !valid_manual_attributes?(array_of_attribute_strings) # true if one or more attributes are outside the allowed starting ranges
     session[:message] = "Sorry, one or more attributes are outside the valid ranges."
     redirect "/stats/input-manual"
   else # all OK - store attributes in session hash and redirect to /index
     session[:current_skill] = params[:new_skill]
     session[:current_stamina] = params[:new_stamina]
     session[:current_luck] = params[:new_luck]
-    redirect "/index"
+    redirect "/stats"
   end
 end
 
@@ -151,7 +145,7 @@ end
 
 get "/bookmark" do
   roll_two_random_dice_for_tray
-  session[:bookmark] ||= "0"
+  session[:bookmark] ||= "1"
 
   erb :bookmark
 end
@@ -159,8 +153,8 @@ end
 post "/bookmark" do
   bookmark_value = params[:updated_bookmark]
   
-  if invalid_bookmark_value?(bookmark_value)
-    session[:message] = "Sorry, the section number should be above zero and less than 401."
+  if !valid_bookmark_value?(bookmark_value)
+    session[:message] = "Sorry, the section number should be a number above zero and less than 401."
     redirect "/bookmark"
   else
     session[:bookmark] = params[:updated_bookmark]
@@ -168,12 +162,25 @@ post "/bookmark" do
   end
 end
 
+get "/inventory" do
+  roll_two_random_dice_for_tray
+  session[:gold] ||= "0"
+  erb :inventory
+end
+
+post "/inventory" do
+  gold_value = params[:updated_gold]
+
+  if !valid_gold_value?(gold_value)
+    session[:message] = "Sorry, the number of gold pieces should be a number that is zero or more."
+    redirect "/inventory"
+  else
+    session[:gold] = params[:updated_gold]
+    redirect "/inventory"
+  end
+end
+
 get "/help" do
   roll_two_random_dice_for_tray
   erb :help
 end
-
-
-
-
-

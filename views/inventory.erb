@@ -1,17 +1,17 @@
-<!-- stats.erb -->
+<!-- inventory.erb -->
 <header>
   <nav class="centred-text">
     <a href="/" class="nav-item">Reload/Reroll</a>
-    <a href="/stats" class="nav-item accented-nav">Stats</a>
-    <a href="/inventory" class="nav-item">Inventory</a>
+    <a href="/stats" class="nav-item">Stats</a>
+    <a href="/inventory" class="nav-item accented-nav">Inventory</a>
     <a href="/bookmark" class="nav-item">Bookmark</a>
-    <a href="/help" class="nav-item ">Help</a>
+    <a href="/help" class="nav-item">Help</a>
   </nav>
 </header>
 
 <main>
 
-  <h1 class="centred-text">Stats</h1>
+  <h1 class="centred-text">Inventory</h1>
   
   <div class="dice-container width-container">
     <img src="/images/<%= DICE_ICONS[@die1] %>" id="left-die" alt="A 3D six-sided die facing with the six side up">
@@ -30,14 +30,17 @@
     </section>
   </div>
 
+ <section class="width-container centred-text">
+    <h2> Current Gold Pieces: </h2>
+    <h2 class="bookmark-value"> <%= session[:gold] %> </h2>
+  </section>
+
   <section class="width-container centred-text">
-
-    <form action="/stats/input-random" method="post" class="centred-text">
-      <button class="reversed-colour-scheme" type="submit">Create Random Stats</button>
+    <h2 class="centred-text"> Update Gold Pieces:</h2>
+    <form action="/inventory" method="post" class="centred-text" min="0" name="updated_gold">
+      <div class="centred-text"><input name="updated_gold" type="number" value="<%= session[:gold] %>"/></div>
+      <button class="reversed-colour-scheme" type="submit">Update Gold</button>
     </form>
-
-    <a href="/stats/input-manual" class="link-button">Manually Create or Update Stats</a>
-
   </section>
 
 </main>
