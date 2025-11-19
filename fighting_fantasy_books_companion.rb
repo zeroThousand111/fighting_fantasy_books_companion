@@ -65,7 +65,7 @@ end
 ## Input Collection and Validation
 
 def is_not_an_empty_string?(string)
-  string != ""
+  string != nil && string.strip.length >= 1
 end
 
 def is_a_numeric_string?(string)
@@ -191,13 +191,34 @@ get "/inventory" do
 end
 
 post "/inventory" do
-  new_item = params[:updated_inventory]
-  # if empty_string?(new_item)
-  session[:inventory] << new_item
+  new_item = params[:updated_inventory].capitalize
+  if !is_not_an_empty_string?(new_item)
+    session[:message] = "Sorry, the new item must contain at least one character."
+  else
+    session[:inventory] << new_item
+  end
+  redirect "/inventory"
+end
+
+get "/inventory/modify/:inventory_index" do
+  @inventory_index = params[:inventory_index].to_i
+  @inventory_item = session[:inventory][@inventory_index]
+  erb :inventory_modify_item
+end
+
+post "/inventory/modify/:inventory_index" do
+  updated_item = params[:updated_inventory].capitalize
+  inventory_index = params[:inventory_index].to_i
+  if !is_not_an_empty_string?(updated_item)
+    session[:message] = "Sorry, the modified item must contain at least one character."
+  else
+    session[:inventory][inventory_index] = updated_item
+  end
   redirect "/inventory"
 end
 
 get "/inventory/delete/:inventory_index" do
+  roll_two_random_dice_for_tray
   index = params[:inventory_index].to_i
   session[:inventory].delete_at(index)
   redirect "/inventory"

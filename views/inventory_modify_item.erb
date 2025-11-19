@@ -1,0 +1,27 @@
+<!-- inventory_modify_item.erb -->
+<header>
+  <nav class="centred-text">
+    <a href="/" class="nav-item">Reload/Reroll</a>
+    <a href="/stats" class="nav-item">Stats</a>
+    <a href="/gold" class="nav-item">Gold</a>
+    <a href="/inventory" class="nav-item accented-nav">Inventory</a>
+    <a href="/bookmark" class="nav-item">Bookmark</a>
+    <a href="/help" class="nav-item">Help</a>
+  </nav>
+</header>
+
+<main>
+
+  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
+
+  <h1 class="centred-text">Modify Inventory Item</h1>
+
+  <section class="width-container centred-text">
+    <h2> Add an item:</h2>
+      <form action="/inventory/modify/<%= @inventory_index %>" method="post" class="centred-text"  name="updated_inventory">
+      <div class="centred-text"><input name="updated_inventory" class="text-input" type="text" size="30" minlength="1" value="<%= @inventory_item %>"/></div>
+      <button class="reversed-colour-scheme" type="submit">Modify Item</button>
+    </form>
+  </section>
+
+</main>

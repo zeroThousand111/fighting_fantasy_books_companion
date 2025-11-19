@@ -197,6 +197,25 @@ input {
   margin: 0 auto;
 }
 
+.delete-btn,
+.modify-btn {
+  font-family: Georgia, serif;
+  text-decoration: none;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  margin-inline-start: 1rem;
+}
+
+.delete-btn {
+  background-color: rgb(255, 48, 48);
+  color: #FFFCF2;
+}
+
+.modify-btn {
+  background-color: #403D39;
+  color: #FFFCF2;
+}
+
 .text-input {
   width: 80%;
 }

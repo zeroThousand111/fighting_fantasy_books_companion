@@ -17,10 +17,13 @@
   <h1 class="centred-text">Inventory</h1>
 
   <section class="width-container centred-text">
-    <h2> Inventory:</h2>
     <ul class="inventory-list">
       <% @inventory.each_with_index do |item, inventory_index| %>
-        <li class="inventory-item"> <%= item %> <a href="/inventory/delete/<%=inventory_index%>" class="delete-btn"> | delete </a> </li>
+        <li class="inventory-item">
+          <%= item %>
+          <a href="/inventory/modify/<%=inventory_index%>" class="modify-btn"> Modify </a>
+          <a href="/inventory/delete/<%=inventory_index%>" class="delete-btn"> Delete </a>
+        </li>
       <% end %>
     </ul>
   </section>
