@@ -1,19 +1,33 @@
 <!-- stats_manual_input.erb -->
+<header>
+  <nav class="centred-text">
+    <a href="/" class="nav-item">Home/Reroll</a>
+    <a href="/stats" class="nav-item accented-nav">Stats</a>
+    <a href="/gold" class="nav-item">Gold</a>
+    <a href="/inventory" class="nav-item">Inventory</a>
+    <a href="/bookmark" class="nav-item">Bookmark</a>
+    <a href="/help" class="nav-item ">Help</a>
+  </nav>
+</header>
 
-<section class="width-container centred-text">
+<main>
 
-<form action="/stats/input-manual" method="post">
-  <label for="new_skill">Enter your starting SKILL:</label>
-  <input type="number" name="new_skill" max="12" min="7" value ="<%= session[:current_skill] %>">
-  <label for="new_stamina">Enter your starting STAMINA:</label>
-  <input type="number" name="new_stamina" max="24" min="14" value ="<%= session[:current_stamina] %>">
-  <label for="new_luck">Enter your starting LUCK:</label>
-  <input type="number" name="new_luck" max="12" min="7" value ="<%= session[:current_luck] %>">
-  <button type="submit">Submit</button>
-</form>
+  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
 
-</section>
+  <h1 class="centred-text">Update Stats</h1>
 
-<section class="centred-text width-container">
-  <a href="/stats" class="link-button"> Return to Stats page </a>
-</section>
+  <section class="width-container centred-text">
+
+  <form action="/stats/input-manual" method="post">
+    <label for="new_skill">Enter your starting SKILL:</label>
+    <input type="number" name="new_skill" max="12" min="7" value ="<%= session[:current_skill] %>">
+    <label for="new_stamina">Enter your starting STAMINA:</label>
+    <input type="number" name="new_stamina" max="24" min="14" value ="<%= session[:current_stamina] %>">
+    <label for="new_luck">Enter your starting LUCK:</label>
+    <input type="number" name="new_luck" max="12" min="7" value ="<%= session[:current_luck] %>">
+    <button type="submit">Submit</button>
+  </form>
+
+  </section>
+
+</main>

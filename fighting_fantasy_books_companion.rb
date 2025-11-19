@@ -112,7 +112,6 @@ get "/index" do
 end
 
 get "/stats" do
-  roll_two_random_dice_for_tray
   erb :stats
 end
 
@@ -152,7 +151,6 @@ post "/stats/input-random" do
 end
 
 get "/bookmark" do
-  roll_two_random_dice_for_tray
   erb :bookmark
 end
 
@@ -169,7 +167,6 @@ post "/bookmark" do
 end
 
 get "/gold" do
-  roll_two_random_dice_for_tray
   erb :gold
 end
 
@@ -186,7 +183,6 @@ post "/gold" do
 end
 
 get "/inventory" do
-  roll_two_random_dice_for_tray
   erb :inventory
 end
 
@@ -218,7 +214,6 @@ post "/inventory/modify/:inventory_index" do
 end
 
 get "/inventory/delete/:inventory_index" do
-  roll_two_random_dice_for_tray
   index = params[:inventory_index].to_i
   session[:inventory].delete_at(index)
   redirect "/inventory"

@@ -1,7 +1,7 @@
 <!-- help.erb -->
 <header>
   <nav class="centred-text">
-    <a href="/" class="nav-item">Reload/Reroll</a>
+    <a href="/" class="nav-item">Home/Reroll</a>
     <a href="/stats" class="nav-item">Stats</a>
     <a href="/gold" class="nav-item">Gold</a>
     <a href="/inventory" class="nav-item">Inventory</a>
@@ -12,25 +12,39 @@
 
 <main>
 
-  <h1 class="centred-text">Help Page</h1>
+  <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
+
+  <h1 class="centred-text">Help</h1>
 
   <section>
     <div class="width-container">
 
-      <h2 class="centred-text">Restoring Skill, Stamina and Luck</h2>
+      <h2 class="centred-text">Introduction</h2>
 
+      <p>The aim of the Fighting Fantasy Companion is to be a temporary scratchpad to help a player have an adventure in a Fighting Fantasy adventure game book.  You no longer have to try to furiously rub out those stubborn pencil markings in the adventure sheet at the front of the book.</p>
 
-      <p>The aim of the Fighting Fantasy Companion is to be a temporary scratchpad to help a player have an adventure in a Fighting Fantasy adventure game book.  You no longer have to try to rub out those engraved pencil markings in the adventure sheet at the front of the book.</p>
+      <h2 class="centred-text">Dice</h2>
 
-      <p>In the event that you don’t have any six-sided dice with you, or don’t have a convenient horizontal surface nearby, every load or reload of a page on the site creates a randomised 2d6 result at the top of the page.  Every time you need a new dice roll, simply press the Reload/Reroll button in the navigation.</p>
+      <p>In the event that you don’t have any six-sided dice with you, or don’t have a convenient horizontal surface nearby, every load or reload of the home page on the site creates a randomised 2d6 result in the dice tray at the top of the page.  Every time you need a new dice roll, simply press the Home/Reroll button in the navigation.</p>
 
-      <p>You can manually enter the current page/section number as a bookmark instead of folding over the corner of a page.</p>
+      <h2 class="centred-text">Bookmarking</h2>
+
+      <p>You can manually enter the current page or section number as a bookmark instead of folding over the corner of a page.</p>
+
+      <h2 class="centred-text">Stats Tracking</h2>
 
       <p>You can track your SKILL, STAMINA and LUCK scores, your gold and the items in your backpack.  You can choose to enter your starting SKILL, STAMINA and LUCK scores manually or generate randomised values at the start of your adventure.  You can also update them as they change through the game.</p>
+
+      <h2 class="centred-text">Mobile-First Design</h2>
 
       <p>The app has been designed for a mobile-first experience, but will adapt to fill larger screens.</p>
 
       <p>Dice icons by <a href="https://www.svgrepo.com/svg/480669/dice-2">Icooon Mono</a>.</p>
+
+      <div class="dice-container width-container">
+        <img src="/images/<%= DICE_ICONS[@die1] %>" id="left-die" alt="A 3D six-sided die facing with a random side up">
+        <img src="/images/<%= DICE_ICONS[@die2] %>" id="right-die" alt="A 3D six-sided die facing with a random side up">
+      </div>
     </div>
   </section>
 
