@@ -186,6 +186,11 @@ get "/inventory" do
   erb :inventory
 end
 
+post "/inventory" do
+  session[:inventory] << params[:updated_inventory]
+  redirect "/inventory"
+end
+
 get "/help" do
   roll_two_random_dice_for_tray
   erb :help
