@@ -164,21 +164,26 @@ post "/bookmark" do
   end
 end
 
-get "/inventory" do
+get "/gold" do
   roll_two_random_dice_for_tray
-  erb :inventory
+  erb :gold
 end
 
-post "/inventory" do
+post "/gold" do
   gold_value = params[:updated_gold]
 
   if !valid_gold_value?(gold_value)
     session[:message] = "Sorry, the number of gold pieces should be a number that is zero or more."
-    redirect "/inventory"
+    redirect "/gold"
   else
     session[:gold] = params[:updated_gold]
-    redirect "/inventory"
+    redirect "/gold"
   end
+end
+
+get "/inventory" do
+  roll_two_random_dice_for_tray
+  erb :inventory
 end
 
 get "/help" do

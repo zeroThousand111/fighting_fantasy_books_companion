@@ -216,7 +216,7 @@ input {
     max-width: 1000px;
     display: grid;
     /* change number of columns to number of nav items in navigation */
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     justify-content: center;
     align-content: center;
   }
