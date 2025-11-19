@@ -20,7 +20,7 @@
     <h2> Inventory:</h2>
     <ul class="inventory-list">
       <% @inventory.each_with_index do |item, inventory_index| %>
-        <li class="inventory-item"> <%= item %> <a href="/inventory/delete/:inventory_index" class="delete-btn" > | delete </a> </li>
+        <li class="inventory-item"> <%= item %> <a href="/inventory/delete/<%=inventory_index%>" class="delete-btn"> | delete </a> </li>
       <% end %>
     </ul>
   </section>
@@ -29,7 +29,7 @@
   <section class="width-container centred-text">
     <h2> Add an item:</h2>
       <form action="/inventory" method="post" class="centred-text"  name="updated_inventory">
-      <div class="centred-text"><input name="updated_inventory" type="text" /></div>
+      <div class="centred-text"><input name="updated_inventory" class="text-input" type="text" size="30" minlength="1"/></div>
       <button class="reversed-colour-scheme" type="submit">Add Item</button>
     </form>
   </section>

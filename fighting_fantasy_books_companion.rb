@@ -96,6 +96,10 @@ def valid_manual_attributes?(array_of_attribute_strings) # return false unless a
   valid_manual_skill_and_luck?(array_of_attribute_strings[0]) && valid_manual_stamina?(array_of_attribute_strings[1]) && valid_manual_skill_and_luck?(array_of_attribute_strings[2])
 end
 
+def empty_string?(new_item)
+  new_item.strip.size == 0
+end
+
 # Routes
 
 get "/" do
@@ -187,7 +191,9 @@ get "/inventory" do
 end
 
 post "/inventory" do
-  session[:inventory] << params[:updated_inventory]
+  new_item = params[:updated_inventory]
+  # if empty_string?(new_item)
+  session[:inventory] << new_item
   redirect "/inventory"
 end
 

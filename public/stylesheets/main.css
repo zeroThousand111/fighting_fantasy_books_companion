@@ -197,6 +197,10 @@ input {
   margin: 0 auto;
 }
 
+.text-input {
+  width: 80%;
+}
+
 .footer-paragraph {
   margin-block-start: 2rem;
 }
