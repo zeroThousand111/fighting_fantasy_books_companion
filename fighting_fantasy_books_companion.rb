@@ -191,6 +191,12 @@ post "/inventory" do
   redirect "/inventory"
 end
 
+get "/inventory/delete/:inventory_index" do
+  index = params[:inventory_index].to_i
+  session[:inventory].delete_at(index)
+  redirect "/inventory"
+end
+
 get "/help" do
   roll_two_random_dice_for_tray
   erb :help

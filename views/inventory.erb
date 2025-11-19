@@ -19,8 +19,8 @@
   <section class="width-container centred-text">
     <h2> Inventory:</h2>
     <ul class="inventory-list">
-      <% @inventory.each do |item| %>
-        <li class="inventory-item"> <%= item %> </li>
+      <% @inventory.each_with_index do |item, inventory_index| %>
+        <li class="inventory-item"> <%= item %> <a href="/inventory/delete/:inventory_index" class="delete-btn" > | delete </a> </li>
       <% end %>
     </ul>
   </section>
