@@ -29,9 +29,11 @@ end
 before do
   # creates an empty array value for :inventory unless it already exists
   session[:inventory] ||= ["Backpack", "Leather Armour", "Sword", "Packed Lunch"]
+  # creates an empty array value for :notes unless it already exists
   session[:notes] ||= ["My first note", "My second note", "My third note"]
   # creates instance variable @inventory as alias for session[:inventory]
   @inventory = session[:inventory]
+  # creates instance variable @notes as alias for session[:notes]
   @notes = session[:notes]
   # sets initial values for some session variables for a new session, but doesn't reassign if these keys already have a value assigned to them
   session[:bookmark] ||= "1"
@@ -88,11 +90,11 @@ def missing_attribute?(array_of_attribute_strings)
 end
 
 def valid_manual_skill_and_luck?(attribute)
-  (7..12).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
+  (0..12).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
 end
 
 def valid_manual_stamina?(attribute)
-  (14..24).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
+  (0..24).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
 end
 
 def valid_manual_attributes?(array_of_attribute_strings) # return false unless all three attributes are within correct ranges
