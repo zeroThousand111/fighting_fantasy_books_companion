@@ -24,6 +24,12 @@ configure do
   set :session_secret, SecureRandom.hex(32)
 end
 
+# Error Handling
+
+not_found do
+  erb :not_found
+end
+
 # Before Actions
 
 before do
