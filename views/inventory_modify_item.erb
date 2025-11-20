@@ -20,7 +20,7 @@
   <section class="width-container centred-text">
     <h2> Modify your item:</h2>
       <form action="/inventory/modify/<%= @inventory_index %>" method="post" class="centred-text"  name="updated_inventory">
-      <div class="centred-text"><input name="updated_inventory" class="text-input" type="text" size="30" minlength="1" value="<%= @inventory_item %>"/></div>
+      <div class="centred-text"><input name="updated_inventory" class="inventory-and-notes-text-input" type="text" value="<%= @inventory_item %>"/></div>
       <button class="reversed-colour-scheme" type="submit">Modify Item</button>
     </form>
   </section>

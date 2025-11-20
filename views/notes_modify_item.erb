@@ -20,7 +20,7 @@
   <section class="width-container centred-text">
     <h2> Modify your note:</h2>
       <form action="/notes/modify/<%= @note_index %>" method="post" class="centred-text"  name="updated_notes">
-      <div class="centred-text"><input name="updated_note" class="text-input" type="text" size="30" minlength="1" value="<%= @note_item %>"/></div>
+      <div class="centred-text"><input name="updated_note" class="inventory-and-notes-text-input" type="text" value="<%= @note_item %>"/></div>
       <button class="reversed-colour-scheme" type="submit">Modify Note</button>
     </form>
   </section>

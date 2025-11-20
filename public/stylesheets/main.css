@@ -232,8 +232,9 @@ input {
   color: #FFFCF2;
 }
 
-.text-input {
+.inventory-and-notes-text-input {
   width: 80%;
+  font-family: "Shadows Into Light", cursive;
 }
 
 .footer-paragraph {
