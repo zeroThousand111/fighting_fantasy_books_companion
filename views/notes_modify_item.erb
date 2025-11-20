@@ -1,4 +1,4 @@
-<!-- inventory_modify_item.erb -->
+<!-- notes_modify_item.erb -->
 <header>
   <nav class="centred-text">
     <a href="/" class="nav-item">Home/Reroll</a>
@@ -15,13 +15,13 @@
 
   <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
 
-  <h1 class="centred-text">Modify Inventory Item</h1>
+  <h1 class="centred-text">Modify Note Item</h1>
 
   <section class="width-container centred-text">
-    <h2> Modify your item:</h2>
-      <form action="/inventory/modify/<%= @inventory_index %>" method="post" class="centred-text"  name="updated_inventory">
-      <div class="centred-text"><input name="updated_inventory" class="text-input" type="text" size="30" minlength="1" value="<%= @inventory_item %>"/></div>
-      <button class="reversed-colour-scheme" type="submit">Modify Item</button>
+    <h2> Modify your note:</h2>
+      <form action="/notes/modify/<%= @note_index %>" method="post" class="centred-text"  name="updated_notes">
+      <div class="centred-text"><input name="updated_note" class="text-input" type="text" size="30" minlength="1" value="<%= @note_item %>"/></div>
+      <button class="reversed-colour-scheme" type="submit">Modify Note</button>
     </form>
   </section>
 

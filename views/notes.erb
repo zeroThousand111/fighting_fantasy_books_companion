@@ -1,11 +1,11 @@
-<!-- inventory.erb -->
+<!-- notes.erb -->
 <header>
   <nav class="centred-text">
     <a href="/" class="nav-item">Home/Reroll</a>
     <a href="/stats" class="nav-item">Stats</a>
     <a href="/gold" class="nav-item">Gold</a>
-    <a href="/inventory" class="nav-item accented-nav">Inventory</a>
-    <a href="/notes" class="nav-item">Notes</a>
+    <a href="/inventory" class="nav-item">Inventory</a>
+    <a href="/notes" class="nav-item accented-nav">Notes</a>
     <a href="/bookmark" class="nav-item">Bookmark</a>
     <a href="/help" class="nav-item">Help</a>
   </nav>
@@ -15,24 +15,24 @@
 
   <p class="centred-text">Here is your <em>adventure sheet</em>!</p>
 
-  <h1 class="centred-text">Inventory</h1>
+  <h1 class="centred-text">Notes</h1>
 
   <section class="width-container centred-text">
     <ul class="inventory-list">
-      <% @inventory.each_with_index do |item, inventory_index| %>
+      <% @notes.each_with_index do |note, note_index| %>
         <li class="inventory-item">
-          <%= item %>
-          <a href="/inventory/modify/<%=inventory_index%>" class="modify-btn"> Modify </a>
-          <a href="/inventory/delete/<%=inventory_index%>" class="delete-btn"> Delete </a>
+          <%= note %>
+          <a href="/notes/modify/<%=note_index%>" class="modify-btn"> Modify </a>
+          <a href="/notes/delete/<%=note_index%>" class="delete-btn"> Delete </a>
         </li>
       <% end %>
     </ul>
   </section>
 
   <section class="width-container centred-text">
-    <h2> Add an item:</h2>
-      <form action="/inventory" method="post" class="centred-text"  name="updated_inventory">
-      <div class="centred-text"><input name="updated_inventory" class="text-input" type="text" size="30" minlength="1"/></div>
+    <h2> Add a note:</h2>
+      <form action="/notes" method="post" class="centred-text"  name="updated_notes">
+      <div class="centred-text"><input name="updated_notes" class="text-input" type="text" size="30" minlength="1"/></div>
       <button class="reversed-colour-scheme" type="submit">Add Item</button>
     </form>
   </section>

@@ -48,14 +48,12 @@ main {
 }
 
 .dice-container {
-  /* outline: blue solid 2px; */
   margin-block-start: 20px;
   margin-block-end: 20px;
   margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
-  /* align-items: center; */
   gap: 1rem;
   width: 200px;
 }
@@ -63,7 +61,6 @@ main {
 .stats-display {
   display: grid;
   grid-template-columns: 1fr;
-  /* align-content: baseline; */
   align-items: center;
   justify-items: center;
 }
@@ -238,10 +235,10 @@ input {
 }
 
 /* MEDIA QUERIES */
-/* REMEMBER: WE HAVE WRITTEN A MOBILE-FIRST APP SO THESE MEDIA QUERIES ARE FOR THE CHANGES FOR SCREENS WIDER THAN MOBILE */
+/* REMEMBER: I HAVE WRITTEN A MOBILE-FIRST APP SO THESE MEDIA QUERIES ARE FOR THE CHANGES FOR SCREENS WIDER THAN MOBILE */
 
-/* This deals with root font size for phones vs everything wider than a mobile */
 @media (min-width: 600px) {
+  /* This deals with root font size for phones vs everything wider than a mobile */
   html {
     font-size: 16px;
   }
@@ -252,7 +249,7 @@ input {
     max-width: 1000px;
     display: grid;
     /* change number of columns to number of nav items in navigation */
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     justify-content: center;
     align-content: center;
   }

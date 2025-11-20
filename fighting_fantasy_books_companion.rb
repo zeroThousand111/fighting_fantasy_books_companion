@@ -29,8 +29,10 @@ end
 before do
   # creates an empty array value for :inventory unless it already exists
   session[:inventory] ||= ["Backpack", "Leather Armour", "Sword", "Packed Lunch"]
+  session[:notes] ||= ["My first note", "My second note", "My third note"]
   # creates instance variable @inventory as alias for session[:inventory]
   @inventory = session[:inventory]
+  @notes = session[:notes]
   # sets initial values for some session variables for a new session, but doesn't reassign if these keys already have a value assigned to them
   session[:bookmark] ||= "1"
   session[:gold] ||= "0"
@@ -151,22 +153,6 @@ post "/stats/input-random" do
   redirect "/stats"
 end
 
-get "/bookmark" do
-  erb :bookmark
-end
-
-post "/bookmark" do
-  bookmark_value = params[:updated_bookmark]
-  
-  if !valid_bookmark_value?(bookmark_value)
-    session[:message] = "Sorry, the section number should be a number above zero and less than 401."
-    redirect "/bookmark"
-  else
-    session[:bookmark] = params[:updated_bookmark]
-    redirect "/bookmark"
-  end
-end
-
 get "/gold" do
   erb :gold
 end
@@ -180,6 +166,22 @@ post "/gold" do
   else
     session[:gold] = params[:updated_gold]
     redirect "/gold"
+  end
+end
+
+get "/bookmark" do
+  erb :bookmark
+end
+
+post "/bookmark" do
+  bookmark_value = params[:updated_bookmark]
+  
+  if !valid_bookmark_value?(bookmark_value)
+    session[:message] = "Sorry, the section number should be a number above zero and less than 401."
+    redirect "/bookmark"
+  else
+    session[:bookmark] = params[:updated_bookmark]
+    redirect "/bookmark"
   end
 end
 
@@ -219,6 +221,44 @@ get "/inventory/delete/:inventory_index" do
   @inventory.delete_at(index)
   redirect "/inventory"
 end
+
+get "/notes" do
+  erb :notes
+end
+
+post "/notes" do
+  new_note = params[:updated_notes].capitalize
+  if !is_not_an_empty_string?(new_note)
+    session[:message] = "Sorry, the new note must contain at least one character."
+  else
+    @notes << new_note
+  end
+  redirect "/notes"
+end
+
+get "/notes/modify/:note_index" do
+  @note_index = params[:note_index].to_i
+  @note_item = @notes[@note_index]
+  erb :notes_modify_item
+end
+
+post "/notes/modify/:note_index" do
+  updated_note = params[:updated_note].capitalize
+  note_index = params[:note_index].to_i
+  if !is_not_an_empty_string?(updated_note)
+    session[:message] = "Sorry, the modified note must contain at least one character."
+  else
+    @notes[note_index] = updated_note
+  end
+  redirect "/notes"
+end
+
+get "/notes/delete/:note_index" do
+  index = params[:note_index].to_i
+  @notes.delete_at(index)
+  redirect "/notes"
+end
+
 
 get "/help" do
   roll_two_random_dice_for_tray

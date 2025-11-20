@@ -5,6 +5,7 @@
     <a href="/stats" class="nav-item">Stats</a>
     <a href="/gold" class="nav-item">Gold</a>
     <a href="/inventory" class="nav-item">Inventory</a>
+    <a href="/notes" class="nav-item">Notes</a>
     <a href="/bookmark" class="nav-item">Bookmark</a>
     <a href="/help" class="nav-item">Help</a>
   </nav>
@@ -46,6 +47,15 @@
     <ul class="inventory-list">
       <% @inventory.each do |item| %>
         <li class="inventory-item"> <%= item %> </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="width-container centred-text">
+    <h2> Notes:</h2>
+    <ul class="inventory-list">
+      <% @notes.each do |note| %>
+        <li class="inventory-item"> <%= note %> </li>
       <% end %>
     </ul>
   </section>
