@@ -76,7 +76,7 @@ def is_a_numeric_string?(string)
 end
 
 def valid_bookmark_value?(bookmark_value)
-  bookmark_value.to_i > 0 && bookmark_value.to_i < 401 && is_a_numeric_string?(bookmark_value) && is_not_an_empty_string?(bookmark_value)
+  bookmark_value.to_i > 0 && bookmark_value.to_i < 801 && is_a_numeric_string?(bookmark_value) && is_not_an_empty_string?(bookmark_value)
 end
 
 def valid_gold_value?(gold_value)
