@@ -68,6 +68,10 @@ main {
   justify-items: center;
 }
 
+form {
+  margin-block-end: 2rem;
+}
+
 footer {
   background-color: #252422;
   color: #FFFCF2;
@@ -176,10 +180,19 @@ button,
   color: #FFFCF2;
   font-family: inherit;
   text-decoration: none;
-  margin-block: 5rem;
   font-size: 1.5rem;
   padding: 2rem;
   border-radius: 2rem;
+}
+
+button {
+  margin-block: 5rem;
+}
+
+.link-button {
+  display: block;
+  margin: 0 auto 5rem;
+  width: 60%;
 }
 
 button:hover,

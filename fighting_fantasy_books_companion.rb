@@ -29,6 +29,7 @@ end
 before do
   # creates an empty array value for :inventory unless it already exists
   session[:inventory] ||= ["Backpack", "Leather Armour", "Sword", "Packed Lunch"]
+  # creates instance variable @inventory as alias for session[:inventory]
   @inventory = session[:inventory]
   # sets initial values for some session variables for a new session, but doesn't reassign if these keys already have a value assigned to them
   session[:bookmark] ||= "1"
@@ -191,14 +192,14 @@ post "/inventory" do
   if !is_not_an_empty_string?(new_item)
     session[:message] = "Sorry, the new item must contain at least one character."
   else
-    session[:inventory] << new_item
+    @inventory << new_item
   end
   redirect "/inventory"
 end
 
 get "/inventory/modify/:inventory_index" do
   @inventory_index = params[:inventory_index].to_i
-  @inventory_item = session[:inventory][@inventory_index]
+  @inventory_item = @inventory[@inventory_index]
   erb :inventory_modify_item
 end
 
@@ -208,14 +209,14 @@ post "/inventory/modify/:inventory_index" do
   if !is_not_an_empty_string?(updated_item)
     session[:message] = "Sorry, the modified item must contain at least one character."
   else
-    session[:inventory][inventory_index] = updated_item
+    @inventory[inventory_index] = updated_item
   end
   redirect "/inventory"
 end
 
 get "/inventory/delete/:inventory_index" do
   index = params[:inventory_index].to_i
-  session[:inventory].delete_at(index)
+  @inventory.delete_at(index)
   redirect "/inventory"
 end
 
