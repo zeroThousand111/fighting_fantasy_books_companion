@@ -113,6 +113,12 @@ a {
   color: rgb(255, 48, 48);
 }
 
+label {
+  display: inline-block;
+  font-size: 1.5rem;
+  margin-block: 2rem;
+}
+
 .nav-item {
   display: block;
   padding-block: 1rem;
