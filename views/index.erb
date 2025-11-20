@@ -37,10 +37,12 @@
     <h2 class="bookmark-value"> <%= session[:bookmark] %> </h2>
   </section>
 
-  <section class="width-container centred-text">
-    <h2> Current Gold Pieces: </h2>
-    <h2 class="bookmark-value"> <%= session[:gold] %> </h2>
-  </section>
+  <div class="reversed-colour-scheme">
+    <section class="width-container centred-text">
+      <h2> Current Gold Pieces: </h2>
+      <h2 class="bookmark-value"> <%= session[:gold] %> </h2>
+    </section>
+  </div>
 
   <section class="width-container centred-text">
     <h2> Inventory:</h2>
@@ -51,13 +53,15 @@
     </ul>
   </section>
 
-  <section class="width-container centred-text">
-    <h2> Notes:</h2>
-    <ul class="inventory-list">
-      <% @notes.each do |note| %>
-        <li class="inventory-item"> <%= note %> </li>
-      <% end %>
-    </ul>
-  </section>
+  <div class="reversed-colour-scheme">
+    <section class="width-container centred-text">
+      <h2> Notes:</h2>
+      <ul class="inventory-list">
+        <% @notes.each do |note| %>
+          <li class="inventory-item"> <%= note %> </li>
+        <% end %>
+      </ul>
+    </section>
+  </div>
 
 </main>
