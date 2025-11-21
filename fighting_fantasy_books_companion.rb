@@ -192,11 +192,11 @@ post "/bookmark" do
   
   if !valid_bookmark_value?(bookmark_value)
     session[:message] = "Sorry, the section number should be a number above zero and less than 401."
-    redirect "/bookmark"
   else
     session[:bookmark] = params[:updated_bookmark]
-    redirect "/bookmark"
   end
+  
+  redirect "/bookmark"
 end
 
 get "/inventory" do
