@@ -22,8 +22,10 @@
       <% @notes.each_with_index do |note, note_index| %>
         <li class="inventory-item">
           <%= note %>
-          <a href="/notes/modify/<%=note_index%>" class="modify-btn"> Modify </a>
-          <a href="/notes/delete/<%=note_index%>" class="delete-btn"> Delete </a>
+          <a href="/notes/modify/<%= note_index %>" class="modify-btn"> Modify </a>
+          <form action="/notes/delete/<%= note_index %>" method="post" class="delete-button-form">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
         </li>
       <% end %>
     </ul>

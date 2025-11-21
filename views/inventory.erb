@@ -22,8 +22,10 @@
       <% @inventory.each_with_index do |item, inventory_index| %>
         <li class="inventory-item">
           <%= item %>
-          <a href="/inventory/modify/<%=inventory_index%>" class="modify-btn"> Modify </a>
-          <a href="/inventory/delete/<%=inventory_index%>" class="delete-btn"> Delete </a>
+          <a href="/inventory/modify/<%= inventory_index %>" class="modify-btn"> Modify </a>
+          <form action="/inventory/delete/<%= inventory_index %>" method="post" class="delete-button-form">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
         </li>
       <% end %>
     </ul>

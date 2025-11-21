@@ -213,6 +213,12 @@ input {
   margin: 0 auto;
 }
 
+/* The form enclosing a delete button next to inventory and notes items that allows a POST request to be submitted to delete that item */
+.delete-button-form {
+  display: inline;
+  margin-block-end: 0;
+}
+
 .delete-btn,
 .modify-btn {
   font-family: Georgia, serif;
@@ -223,7 +229,19 @@ input {
 }
 
 .delete-btn {
+  display: inline;
   background-color: rgb(255, 48, 48);
+  color: #FFFCF2;
+  margin-block: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* overrides hover etc behaviour of delete buttons in inventory and notes pages compared to regular buttons */
+.delete-btn:hover,
+.delete-btn:focus,
+.link-button:hover,
+.link-button:focus {
   color: #FFFCF2;
 }
 

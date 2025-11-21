@@ -22,6 +22,7 @@ DICE_ICONS = {
 configure do
   enable :sessions
   set :session_secret, SecureRandom.hex(32)
+  set :erb, :escape_html => true 
 end
 
 # Error Handling
@@ -80,7 +81,7 @@ def is_not_an_empty_string?(string)
 end
 
 def is_a_numeric_string?(string)
-  string.chars.all? { |char| char.match?(/\d/) }
+  string.match?(/\A\d+\z/)
 end
 
 def valid_bookmark_value?(bookmark_value)
@@ -109,6 +110,11 @@ end
 
 def empty_string?(new_item)
   new_item.strip.size == 0
+end
+
+# checks for index value that is outside current range of used indexes in inventory and notes array data structures
+def invalid_index?(array, index)
+  index >= array.size || index < 0
 end
 
 # Routes
@@ -199,16 +205,24 @@ end
 
 post "/inventory" do
   new_item = params[:updated_inventory].capitalize
+
   if !is_not_an_empty_string?(new_item)
     session[:message] = "Sorry, the new item must contain at least one character."
   else
     @inventory << new_item
   end
+
   redirect "/inventory"
 end
 
 get "/inventory/modify/:inventory_index" do
   @inventory_index = params[:inventory_index].to_i
+
+  if invalid_index?(@inventory, @inventory_index)
+    session[:message] = "You've tried to select an inventory item that doesn't exist at that index."
+    redirect "/inventory"
+  end
+
   @inventory_item = @inventory[@inventory_index]
   erb :inventory_modify_item
 end
@@ -216,6 +230,12 @@ end
 post "/inventory/modify/:inventory_index" do
   updated_item = params[:updated_inventory].capitalize
   inventory_index = params[:inventory_index].to_i
+
+  if invalid_index?(@inventory, inventory_index)
+    session[:message] = "You've tried to modify an inventory item that doesn't exist at that index."
+    redirect "/inventory"
+  end
+
   if !is_not_an_empty_string?(updated_item)
     session[:message] = "Sorry, the modified item must contain at least one character."
   else
@@ -224,9 +244,15 @@ post "/inventory/modify/:inventory_index" do
   redirect "/inventory"
 end
 
-get "/inventory/delete/:inventory_index" do
-  index = params[:inventory_index].to_i
-  @inventory.delete_at(index)
+post "/inventory/delete/:inventory_index" do
+  inventory_index = params[:inventory_index].to_i
+
+  if invalid_index?(@inventory, inventory_index)
+    session[:message] = "You've tried to delete an inventory item that doesn't exist at that index."
+    redirect "/inventory"
+  end
+
+  @inventory.delete_at(inventory_index)
   redirect "/inventory"
 end
 
@@ -246,6 +272,12 @@ end
 
 get "/notes/modify/:note_index" do
   @note_index = params[:note_index].to_i
+
+  if invalid_index?(@notes, @note_index)
+    session[:message] = "You've tried to select a note that doesn't exist at that index."
+    redirect "/notes"
+  end
+
   @note_item = @notes[@note_index]
   erb :notes_modify_item
 end
@@ -253,6 +285,12 @@ end
 post "/notes/modify/:note_index" do
   updated_note = params[:updated_note].capitalize
   note_index = params[:note_index].to_i
+
+  if invalid_index?(@notes, note_index)
+    session[:message] = "You've tried to modify a note that doesn't exist at that index."
+    redirect "/notes"
+  end
+
   if !is_not_an_empty_string?(updated_note)
     session[:message] = "Sorry, the modified note must contain at least one character."
   else
@@ -261,9 +299,15 @@ post "/notes/modify/:note_index" do
   redirect "/notes"
 end
 
-get "/notes/delete/:note_index" do
-  index = params[:note_index].to_i
-  @notes.delete_at(index)
+post "/notes/delete/:note_index" do
+  note_index = params[:note_index].to_i
+
+  if invalid_index?(@notes, note_index)
+    session[:message] = "You've tried to delete a note that doesn't exist at that index."
+    redirect "/notes"
+  end
+
+  @notes.delete_at(note_index)
   redirect "/notes"
 end
 
