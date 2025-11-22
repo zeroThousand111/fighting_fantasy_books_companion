@@ -54,11 +54,12 @@ class FFBCTest < Minitest::Test
   end
 
   ## helper method tests
-  ## test helper methods explicitly or implicitly from running routes?  Decide if I want to do purely integration testing or include some unit testing too.  Might be fun to do a bit of both!?
+  ## test helper methods explicitly (unit testing) or implicitly from running routes (integration testing)?  Decide if I want to do purely integration testing or include some unit testing too.  Might be fun to do a bit of both!?  But... I don't yet know how to implement unit tests without using a route (which will be integration testing!)
 
   ### test random stats give expected range of results
-  ### test is_not_an_empty_string?
-  ### test is_a_numeric_string?
+
+  ### test_is_not_an_empty_string?
+  ### test_is_a_numeric_string?
   ### etc
 
   # def something
@@ -80,6 +81,8 @@ class FFBCTest < Minitest::Test
 
   ## routes - stats
 
+  ### stats - test starting default values for stats are nil
+
   def test_default_stats_have_nil_value
     get "/stats", starting_rack_session
     assert_nil session[:new_skill]
@@ -92,18 +95,22 @@ class FFBCTest < Minitest::Test
     assert_nil session[:new_luck]
   end
 
-  ### test random stats give expected range of values for all three attributes
+  ### stats - test random stats give expected range of values for all three attributes
 
-  ### test valid input for manual input
-  ### test invalid input for manual input
-  ### test bad inputs for manual input
+  ### stats- test valid input for manual input
+  ### stats - test invalid input for manual input
+  ### stats - test bad inputs for manual input
 
   ## routes - gold
+
+  ### gold - test starting default value
 
   def test_default_gold_value_is_0
     get "/gold", starting_rack_session
     assert_equal "0", session[:gold]
   end
+
+  ### gold - test valid value change
 
   def test_valid_gold_value_change_from_0_to_999
     post "/gold", {:updated_gold => "999"}, starting_rack_session
@@ -113,6 +120,8 @@ class FFBCTest < Minitest::Test
     assert_includes "gold", last_response.body
     assert_equal 302, last_response.status
   end
+
+  ### gold - test invalid value change
 
   def test_invalid_gold_value_change_from_0_to_minus_1
     post "/gold", {:updated_gold => "-1"}, starting_rack_session
@@ -124,14 +133,38 @@ class FFBCTest < Minitest::Test
     assert_equal 302, last_response.status
   end
 
-  ### test bad inputs
+  ### gold - test bad inputs
+
+  def test_bad_input_gold_value_change_from_0_to_alphabetic_string
+    post "/gold", {:updated_gold => "aaa"}, starting_rack_session
+    # original value of gold should not change and should remain as 0
+    assert_equal "0", session[:gold]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the number of gold pieces should be a number that is zero or more.", session[:message]
+    # expect a redirect to /gold
+    assert_equal 302, last_response.status
+  end
+
+  def test_bad_input_gold_value_change_from_0_to_empty_string
+    post "/gold", {:updated_gold => ""}, starting_rack_session
+    # original value of gold should not change and should remain as 0
+    assert_equal "0", session[:gold]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the number of gold pieces should be a number that is zero or more.", session[:message]
+    # expect a redirect to /gold
+    assert_equal 302, last_response.status
+  end
 
   ## routes - bookmark
+
+  ### bookmark - test starting default value
 
   def test_default_bookmark_value_is_1
     get "/index", starting_rack_session
     assert_equal "1", session[:bookmark]
   end
+
+  ### bookmark - test valid value change
 
   def test_valid_bookmark_value_change_from_1_to_400
     post "/bookmark", {:updated_bookmark => "400"}, starting_rack_session
@@ -142,19 +175,43 @@ class FFBCTest < Minitest::Test
     assert_equal 302, last_response.status
   end
 
+  ### bookmark - test invalid value change
+
   def test_invalid_bookmark_value_change_from_1_to_801
     post "/bookmark", {:updated_bookmark => "801"}, starting_rack_session
     # original value of bookmark should not change and should remain as 1
     assert_equal "1", session[:bookmark]
     # a session message should be created for printing on redirect
-    assert_equal "Sorry, the section number should be a number above zero and less than 401.", session[:message]
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
     # expect a redirect to /bookmark
     assert_equal 302, last_response.status
   end
 
-  ### test bad inputs
+  ### bookmark - test bad inputs
+
+  def test_bad_input_bookmark_value_change_from_1_to_alphabetic_string
+    post "/bookmark", {:updated_bookmark => "aaa"}, starting_rack_session
+    # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
+
+  def test_bad_input_bookmark_value_change_from_1_to_empty_string
+    post "/bookmark", {:updated_bookmark => ""}, starting_rack_session
+    # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
 
   ## routes - inventory
+
+  ### inventory - test starting default value
 
   def test_default_inventory_contents
     get "/inventory", starting_rack_session
@@ -164,11 +221,65 @@ class FFBCTest < Minitest::Test
     assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
   end
 
-  ### test valid input
-  ### test invalid input
-  ### test bad inputs
+  ### inventory - test valid input
+
+  def test_addition_of_valid_inventory_item
+    post "/inventory", {:updated_inventory => "teSt IteM"}, starting_rack_session
+    # Test item should be added to :inventory array in capitalized format
+    assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch", "Test item"], session[:inventory]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  def test_valid_modification_of_inventory_item
+    post "/inventory/modify/:inventory_index", {:updated_inventory => "teSt IteM", :inventory_index => "0"}, starting_rack_session
+    # Backpack item should be modified to Test item in :inventory array in capitalized format at index 0
+    assert_equal ["Test item", "Leather Armour", "Sword", "Packed Lunch"],  session[:inventory]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  def test_deletion_of_inventory_items
+    post "/inventory/delete/:inventory_index", {:inventory_index => "0"},starting_rack_session
+    # Backpack item at index 0 should be deleted
+    assert_equal ["Leather Armour", "Sword", "Packed Lunch"],  session[:inventory]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  ### inventory - test invalid input
+
+  def test_addition_of_invalid_inventory_item_empty_string
+    post "/inventory", {:updated_inventory => ""}, starting_rack_session
+    # Empty string item should NOT be added to :inventory array
+    assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
+    # expect a session :message to be displayed
+    assert_equal "Sorry, the new item must contain at least one character.", session[:message]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  ### inventory - test bad inputs
+
+  def test_asking_for_invalid_inventory_index_to_delete
+    skip
+    # test inventory only has 4 items (so max index is 3)
+    post "/inventory/delete/:inventory_index", {:inventory_index => "666"}, starting_rack_session
+    # :inventory array should remain unchanged
+    assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
+    # expect a session :message to be displayed
+    assert_equal "You've tried to delete an inventory item that doesn't exist at that index.", session[:message]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  ### add bad html - how to test?
+  #### other bad inputs
+
 
   ## routes - notes
+
+  ### notes - test starting default value
 
   def test_default_notes_contents
     get "/notes", starting_rack_session
@@ -178,8 +289,8 @@ class FFBCTest < Minitest::Test
     assert_equal ["My first note", "My second note", "My third note"], session[:notes]
   end
 
-  ### test valid input
-  ### test invalid input
-  ### test bad inputs
+  ### notes - test valid input
+  ### notes - test invalid input
+  ### notes - test bad inputs
 
 end

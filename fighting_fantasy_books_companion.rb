@@ -114,7 +114,7 @@ end
 
 # checks for index value that is outside current range of used indexes in inventory and notes array data structures
 def invalid_index?(array, index)
-  index >= array.size || index < 0
+  index > array.size - 1 || index < 0
 end
 
 # Routes
@@ -191,7 +191,7 @@ post "/bookmark" do
   bookmark_value = params[:updated_bookmark]
   
   if !valid_bookmark_value?(bookmark_value)
-    session[:message] = "Sorry, the section number should be a number above zero and less than 401."
+    session[:message] = "Sorry, the section number should be a number above zero and less than 801."
   else
     session[:bookmark] = params[:updated_bookmark]
   end
