@@ -231,6 +231,14 @@ class FFBCTest < Minitest::Test
     assert_equal 302, last_response.status
   end
 
+  def test_valid_selection_of_inventory_item_to_modify
+    skip
+    get "/inventory/modify/:inventory_index", {:inventory_index => "2"}, starting_rack_session
+    # Sword is the third inventory item in the starting :inventory i.e. index 2
+    assert_equal "Sword", last_response.headers['Inventory-Item']
+    assert_equal 200, last_response.status
+  end
+
   def test_valid_modification_of_inventory_item
     post "/inventory/modify/:inventory_index", {:updated_inventory => "teSt IteM", :inventory_index => "0"}, starting_rack_session
     # Backpack item should be modified to Test item in :inventory array in capitalized format at index 0
@@ -261,6 +269,7 @@ class FFBCTest < Minitest::Test
 
   ### inventory - test bad inputs
 
+  # this isn't working because despite an invalid index, the item at index 0 is deleted!
   def test_asking_for_invalid_inventory_index_to_delete
     skip
     # test inventory only has 4 items (so max index is 3)
@@ -269,6 +278,17 @@ class FFBCTest < Minitest::Test
     assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
     # expect a session :message to be displayed
     assert_equal "You've tried to delete an inventory item that doesn't exist at that index.", session[:message]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  # this also doesn't work, maybe because the HTTP response is my custom 404?
+  def test_asking_for_invalid_inventory_index_to_modify
+    skip
+    # test inventory only has 4 items (so max index is 3)
+    get "/inventory/modify/:inventory_index", {:inventory_index => "666"}, starting_rack_session
+    # expect a session :message to be displayed
+    # assert_equal "You've tried to select an inventory item that doesn't exist at that index.", session[:message]
     # expect a redirect to /inventory
     assert_equal 302, last_response.status
   end
