@@ -7,26 +7,6 @@ require "rack/test"
 
 require_relative "../fighting_fantasy_books_companion.rb"
 
-# constants for stats - check the format!!  A hash??!
-
-# DISALLOWED_HIGH_STARTING_ATTRIBUTE_SKILL = {
-#   skill: "13",
-#   stamina: "14",
-#   luck: "7"
-# }
-
-# DISALLOWED_HIGH_STARTING_ATTRIBUTE_STAMINA = {
-#   skill: "7",
-#   stamina: "25",
-#   luck: "7"
-# }
-
-# DISALLOWED_HIGH_STARTING_ATTRIBUTE_LUCK = {
-#   skill: "7",
-#   stamina: "14",
-#   luck: "13"
-# }
-
 class FFBCTest < Minitest::Test
   include Rack::Test::Methods
 
@@ -37,12 +17,6 @@ class FFBCTest < Minitest::Test
   def session
     last_request.env["rack.session"]
   end
-
-  # tests go here
-
-  # def setup
-
-  # end
 
   def starting_rack_session
     { "rack.session" => { gold: "0", 
@@ -61,9 +35,6 @@ class FFBCTest < Minitest::Test
   ### test_is_not_an_empty_string?
   ### test_is_a_numeric_string?
   ### etc
-
-  # def something
-  # end
 
   ## routes - index/home
   
