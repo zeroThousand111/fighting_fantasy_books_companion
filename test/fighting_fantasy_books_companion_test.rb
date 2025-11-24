@@ -97,9 +97,65 @@ class FFBCTest < Minitest::Test
 
   ### stats - test random stats give expected range of values for all three attributes
 
+  def test_random_stats_generation_is_between_min_and_max
+    post "/stats/input-random", starting_rack_session
+    # assign returned values in HTTP response to local variables and transform to Integers from Numeric Strings
+    skill = session[:current_skill].to_i
+    stamina = session[:current_stamina].to_i
+    luck = session[:current_luck].to_i
+    # expect values of stats to be in valid ranges
+    assert (7..12).cover?(skill)
+    assert (12..24).cover?(stamina)
+    assert (7..12).cover?(luck)
+    # expect a redirect to /stats
+    assert_equal 302, last_response.status
+  end
+
   ### stats- test valid input for manual input
+
+  def test_manual_stats_valid_input
+    post "/stats/input-manual", {:new_skill => 12, :new_stamina => 14, :new_luck => 12}, starting_rack_session
+    # assign returned values in HTTP response to local variables and transform to Integers from Numeric Strings
+    skill = session[:current_skill].to_i
+    stamina = session[:current_stamina].to_i
+    luck = session[:current_luck].to_i
+    # expect values of stats to be in valid ranges
+    assert (0..12).cover?(skill)
+    assert (0..24).cover?(stamina)
+    assert (0..12).cover?(luck)
+    # expect a redirect to /stats
+    assert_equal 302, last_response.status
+  end
+
   ### stats - test invalid input for manual input
+
+  def test_manual_stats_invalid_input_too_high_values
+    post "/stats/input-manual", {:new_skill => "99", :new_stamina => "99", :new_luck => "99"}, starting_rack_session
+    # expect starting values of three stats to remain unchanged
+    assert_nil session[:current_skill]
+    assert_nil session[:current_stamina]
+    assert_nil session[:current_luck]
+    # expect a session message to be generated and printed
+    assert_equal "Sorry, one or more attributes are outside the valid ranges.", session[:message]
+    # expect a redirect to /stats/input-manual
+    assert_equal 302, last_response.status
+  end
+
+  def test_manual_stats_missing_input
+    post "/stats/input-manual", {:new_skill => "12", :new_stamina => "24", :new_luck => nil }, starting_rack_session
+    # expect starting values of three stats to remain unchanged
+    assert_nil session[:current_skill]
+    assert_nil session[:current_stamina]
+    assert_nil session[:current_luck]
+    # expect a session message to be generated and printed
+    assert_equal "Sorry, one or more attributes are missing.", session[:message]
+    # expect a redirect to /stats/input-manual
+    assert_equal 302, last_response.status
+  end
+
   ### stats - test bad inputs for manual input
+
+
 
   ## routes - gold
 
