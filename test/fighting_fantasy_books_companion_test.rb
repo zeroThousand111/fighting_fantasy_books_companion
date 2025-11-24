@@ -102,7 +102,7 @@ class FFBCTest < Minitest::Test
 
   def test_manual_stats_invalid_input_too_high_values
     post "/stats/input-manual", {:new_skill => "99", :new_stamina => "99", :new_luck => "99"}, starting_rack_session
-    # expect starting values of three stats to remain unchanged
+    # expect starting values of three stats to remain unchanged from starting nil values
     assert_nil session[:current_skill]
     assert_nil session[:current_stamina]
     assert_nil session[:current_luck]
@@ -125,6 +125,7 @@ class FFBCTest < Minitest::Test
   end
 
   ### stats - test bad inputs for manual input
+
 
 
 
@@ -179,60 +180,6 @@ class FFBCTest < Minitest::Test
     # a session message should be created for printing on redirect
     assert_equal "Sorry, the number of gold pieces should be a number that is zero or more.", session[:message]
     # expect a redirect to /gold
-    assert_equal 302, last_response.status
-  end
-
-  ## routes - bookmark
-
-  ### bookmark - test starting default value
-
-  def test_default_bookmark_value_is_1
-    get "/index", starting_rack_session
-    assert_equal "1", session[:bookmark]
-  end
-
-  ### bookmark - test valid value change
-
-  def test_valid_bookmark_value_change_from_1_to_400
-    post "/bookmark", {:updated_bookmark => "400"}, starting_rack_session
-    # expect a change of value of bookmark to "400"
-    assert_equal "400", session[:bookmark]
-    # expect a redirect to /bookmark and bookmark.erb page
-    assert_includes "bookmark", last_response.body
-    assert_equal 302, last_response.status
-  end
-
-  ### bookmark - test invalid value change
-
-  def test_invalid_bookmark_value_change_from_1_to_801
-    post "/bookmark", {:updated_bookmark => "801"}, starting_rack_session
-    # original value of bookmark should not change and should remain as 1
-    assert_equal "1", session[:bookmark]
-    # a session message should be created for printing on redirect
-    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
-    # expect a redirect to /bookmark
-    assert_equal 302, last_response.status
-  end
-
-  ### bookmark - test bad inputs
-
-  def test_bad_input_bookmark_value_change_from_1_to_alphabetic_string
-    post "/bookmark", {:updated_bookmark => "aaa"}, starting_rack_session
-    # original value of bookmark should not change and should remain as 1
-    assert_equal "1", session[:bookmark]
-    # a session message should be created for printing on redirect
-    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
-    # expect a redirect to /bookmark
-    assert_equal 302, last_response.status
-  end
-
-  def test_bad_input_bookmark_value_change_from_1_to_empty_string
-    post "/bookmark", {:updated_bookmark => ""}, starting_rack_session
-    # original value of bookmark should not change and should remain as 1
-    assert_equal "1", session[:bookmark]
-    # a session message should be created for printing on redirect
-    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
-    # expect a redirect to /bookmark
     assert_equal 302, last_response.status
   end
 
@@ -339,5 +286,59 @@ class FFBCTest < Minitest::Test
   ### notes - test valid input
   ### notes - test invalid input
   ### notes - test bad inputs
+
+  ## routes - bookmark
+
+  ### bookmark - test starting default value
+
+  def test_default_bookmark_value_is_1
+    get "/index", starting_rack_session
+    assert_equal "1", session[:bookmark]
+  end
+
+  ### bookmark - test valid value change
+
+  def test_valid_bookmark_value_change_from_1_to_400
+    post "/bookmark", {:updated_bookmark => "400"}, starting_rack_session
+    # expect a change of value of bookmark to "400"
+    assert_equal "400", session[:bookmark]
+    # expect a redirect to /bookmark and bookmark.erb page
+    assert_includes "bookmark", last_response.body
+    assert_equal 302, last_response.status
+  end
+
+  ### bookmark - test invalid value change
+
+  def test_invalid_bookmark_value_change_from_1_to_801
+    post "/bookmark", {:updated_bookmark => "801"}, starting_rack_session
+    # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
+
+  ### bookmark - test bad inputs
+
+  def test_bad_input_bookmark_value_change_from_1_to_alphabetic_string
+    post "/bookmark", {:updated_bookmark => "aaa"}, starting_rack_session
+    # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
+
+  def test_bad_input_bookmark_value_change_from_1_to_empty_string
+    post "/bookmark", {:updated_bookmark => ""}, starting_rack_session
+    # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
 
 end

@@ -183,22 +183,6 @@ post "/gold" do
   end
 end
 
-get "/bookmark" do
-  erb :bookmark
-end
-
-post "/bookmark" do
-  bookmark_value = params[:updated_bookmark]
-  
-  if !valid_bookmark_value?(bookmark_value)
-    session[:message] = "Sorry, the section number should be a number above zero and less than 801."
-  else
-    session[:bookmark] = params[:updated_bookmark]
-  end
-  
-  redirect "/bookmark"
-end
-
 get "/inventory" do
   erb :inventory
 end
@@ -311,6 +295,21 @@ post "/notes/delete/:note_index" do
   redirect "/notes"
 end
 
+get "/bookmark" do
+  erb :bookmark
+end
+
+post "/bookmark" do
+  bookmark_value = params[:updated_bookmark]
+  
+  if !valid_bookmark_value?(bookmark_value)
+    session[:message] = "Sorry, the section number should be a number above zero and less than 801."
+  else
+    session[:bookmark] = params[:updated_bookmark]
+  end
+  
+  redirect "/bookmark"
+end
 
 get "/help" do
   roll_two_random_dice_for_tray
