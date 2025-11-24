@@ -195,7 +195,7 @@ class FFBCTest < Minitest::Test
     assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
   end
 
-  ### inventory - test valid input
+  ### inventory - valid test input
 
   def test_addition_of_valid_inventory_item
     post "/inventory", {:updated_inventory => "teSt IteM"}, starting_rack_session
@@ -206,24 +206,23 @@ class FFBCTest < Minitest::Test
   end
 
   def test_valid_selection_of_inventory_item_to_modify
-    skip
-    get "/inventory/modify/:inventory_index", {:inventory_index => "2"}, starting_rack_session
-    # Sword is the third inventory item in the starting :inventory i.e. index 2 THIS CURRENTLY DOESN'T WORK.  INDEX 0 - BACKPACK - IS BEING SELECTED INSTEAD
-    assert_includes "Sword", last_response.body
+    get "/inventory/modify/2", starting_rack_session
+    # Sword is the third inventory item in the starting :inventory i.e. index 2 and so the body of the HTTP response will have "Sword" as the value of `value` of the `<input>` element
+    assert_includes last_response.body, "Sword"
     # will get 200 status response to inventory_modify_item.erb, not 302 redirect to /inventory
     assert_equal 200, last_response.status
   end
 
   def test_valid_modification_of_inventory_item
-    post "/inventory/modify/:inventory_index", {:updated_inventory => "teSt IteM", :inventory_index => "0"}, starting_rack_session
+    post "/inventory/modify/0", {:updated_inventory => "teSt IteM" }, starting_rack_session
     # Backpack item should be modified to Test item in :inventory array in capitalized format at index 0
     assert_equal ["Test item", "Leather Armour", "Sword", "Packed Lunch"],  session[:inventory]
     # expect a redirect to /inventory
     assert_equal 302, last_response.status
   end
 
-  def test_deletion_of_inventory_items
-    post "/inventory/delete/:inventory_index", {:inventory_index => "0"},starting_rack_session
+  def test_deletion_of_inventory_item
+    post "/inventory/delete/0", starting_rack_session
     # Backpack item at index 0 should be deleted
     assert_equal ["Leather Armour", "Sword", "Packed Lunch"],  session[:inventory]
     # expect a redirect to /inventory
@@ -244,11 +243,9 @@ class FFBCTest < Minitest::Test
 
   ### inventory - test bad inputs
 
-  # this isn't working because despite an invalid index, the item at index 0 is deleted!
   def test_asking_for_invalid_inventory_index_to_delete
-    skip
     # test inventory only has 4 items (so max index is 3)
-    post "/inventory/delete/:inventory_index", {:inventory_index => "666"}, starting_rack_session
+    post "/inventory/delete/999", starting_rack_session
     # :inventory array should remain unchanged
     assert_equal ["Backpack", "Leather Armour", "Sword", "Packed Lunch"], session[:inventory]
     # expect a session :message to be displayed
@@ -257,26 +254,47 @@ class FFBCTest < Minitest::Test
     assert_equal 302, last_response.status
   end
 
-  def test_asking_for_invalid_inventory_index_to_delete_returns_404
-    post "/inventory/delete/:inventory_index", {:inventory_index => "666"}, starting_rack_session
-    # expect my custom 404 response, which is itself a 302 redirect
-    assert_equal 302, last_response.status
-  end
-
-  # this also doesn't work, maybe because the HTTP response is my custom 404?
   def test_asking_for_invalid_inventory_index_to_modify
-    skip
     # test inventory only has 4 items (so max index is 3)
-    get "/inventory/modify/:inventory_index", {:inventory_index => "666"}, starting_rack_session
+    get "/inventory/modify/999", starting_rack_session
     # expect a session :message to be displayed
-    # assert_equal "You've tried to select an inventory item that doesn't exist at that index.", session[:message]
+    assert_equal "You've tried to select an inventory item that doesn't exist at that index.", session[:message]
     # expect a redirect to /inventory
     assert_equal 302, last_response.status
   end
 
-  ### add bad html - how to test?
-  #### other bad inputs
+  def test_modifying_an_inventory_item_to_an_empty_string
+    # modifying item at index 1 i.e. Leather Armour to become an empty string ""
+    post "/inventory/modify/1", {:updated_inventory => ""}, starting_rack_session
+    # route should initialise a new session message which will be displayed
+    assert_equal "Sorry, the modified item must contain at least one character.", session[:message]
+    assert_equal 302, last_response.status
+  end
 
+  ### test bad html is handled - LSBot assisted test
+  def test_modifying_item_with_malicious_html
+    # 1. Define the malicious input and its expected escaped version
+    malicious_input = "<script>alert('pwned')</script>"
+    escaped_output = "&lt;script&gt;alert(&#39;pwned&#39;)&lt;/script&gt;"
+
+    # 2. POST the malicious data to update an inventory item
+    post "/inventory/modify/1", { updated_inventory: malicious_input }, starting_rack_session
+
+    # The app should redirect after a POST
+    assert_equal 302, last_response.status
+
+    # # 3. Follow the redirect to the page where the data is displayed
+    get last_response["Location"]
+
+    # # 4. Assert that the final page's body contains the ESCAPED HTML
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, escaped_output
+
+    # # 5. (Optional but good practice) Assert that the raw, unescaped HTML is NOT present
+    refute_includes last_response.body, malicious_input
+  end
+
+  #### other bad inputs?
 
   ## routes - notes
 
@@ -291,8 +309,105 @@ class FFBCTest < Minitest::Test
   end
 
   ### notes - test valid input
+
+  def test_addition_of_valid_notes_item
+    post "/notes", {:updated_notes => "teSt IteM"}, starting_rack_session
+    # Test item should be added to :inventory array in capitalized format
+    assert_equal ["My first note", "My second note", "My third note", "Test item"], session[:notes]
+    # expect a redirect to /notes
+    assert_equal 302, last_response.status
+  end
+
+  def test_valid_selection_of_note_item_to_modify
+    get "/notes/modify/2", starting_rack_session
+    # "My third note" is the third note item in the starting :notes i.e. index 2 and so the body of the HTTP response will have "My third note" as the value of `value` of the `<input>` element
+    assert_includes last_response.body, "My third note"
+    # will get 200 status response to notes_modify_item.erb, not 302 redirect to /notes
+    assert_equal 200, last_response.status
+  end
+
+  def test_valid_modification_of_note_item
+    post "/notes/modify/0", {:updated_note => "teSt IteM"}, starting_rack_session
+    # "My first note" item should be modified to "Test item" in :notes array in capitalized format at index 0
+    assert_equal ["Test item", "My second note", "My third note"],  session[:notes]
+    # expect a redirect to /notes
+    assert_equal 302, last_response.status
+  end
+
+  def test_deletion_of_note_item
+    post "/notes/delete/0", starting_rack_session
+    # Backpack item at index 0 should be deleted
+    assert_equal ["My second note", "My third note"],  session[:notes]
+    # expect a redirect to /notes
+    assert_equal 302, last_response.status
+  end
+
   ### notes - test invalid input
+
+  def test_addition_of_invalid_notes_item_empty_string
+    post "/notes", {:updated_notes => ""}, starting_rack_session
+    # Empty string item should NOT be added to :notes array
+    assert_equal ["My first note", "My second note", "My third note"], session[:notes]
+    # expect a session :message to be displayed
+    assert_equal "Sorry, the new note must contain at least one character.", session[:message]
+    # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
   ### notes - test bad inputs
+
+  def test_asking_for_invalid_note_index_to_delete
+    # test notes array only has 3 items (so max index is 2)
+    post "/notes/delete/999", starting_rack_session
+    # :inventory array should remain unchanged
+    assert_equal ["My first note", "My second note", "My third note"], session[:notes]
+    # expect a session :message to be displayed
+    assert_equal "You've tried to delete a note that doesn't exist at that index.", session[:message]
+    # expect a redirect to /notes
+    assert_equal 302, last_response.status
+  end
+
+  def test_asking_for_invalid_note_index_to_modify
+    # test notes array only has 3 items (so max index is 2)
+    get "/notes/modify/999", starting_rack_session
+    # expect a session :message to be displayed
+    assert_equal "You've tried to select a note that doesn't exist at that index.", session[:message]
+    # expect a redirect to /notes
+    assert_equal 302, last_response.status
+  end
+
+  def test_modifying_a_note_item_to_an_empty_string
+    # modifying item at index 1 i.e. "My second note" to become an empty string ""
+    post "/notes/modify/1", {:updated_note => ""}, starting_rack_session
+    # route should initialise a new session message which will be displayed
+    assert_equal "Sorry, the modified note must contain at least one character.", session[:message]
+    assert_equal 302, last_response.status
+  end
+
+  ### test bad html is handled - LSBot assisted test
+  def test_modifying_note_with_malicious_html
+    # 1. Define the malicious input and its expected escaped version
+    malicious_input = "<script>alert('pwned')</script>"
+    escaped_output = "&lt;script&gt;alert(&#39;pwned&#39;)&lt;/script&gt;"
+
+    # 2. POST the malicious data to update an inventory item
+    post "/notes/modify/1", { updated_note: malicious_input }, starting_rack_session
+
+    # The app should redirect after a POST
+    assert_equal 302, last_response.status
+
+    # # 3. Follow the redirect to the page where the data is displayed
+    get last_response["Location"]
+
+    # # 4. Assert that the final page's body contains the ESCAPED HTML
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, escaped_output
+
+    # # 5. (Optional but good practice) Assert that the raw, unescaped HTML is NOT present
+    refute_includes last_response.body, malicious_input
+  end
+
+  #### other bad inputs?
 
   ## routes - bookmark
 
