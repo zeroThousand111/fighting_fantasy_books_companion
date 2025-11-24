@@ -208,8 +208,9 @@ class FFBCTest < Minitest::Test
   def test_valid_selection_of_inventory_item_to_modify
     skip
     get "/inventory/modify/:inventory_index", {:inventory_index => "2"}, starting_rack_session
-    # Sword is the third inventory item in the starting :inventory i.e. index 2
-    assert_equal "Sword", last_response.headers['Inventory-Item']
+    # Sword is the third inventory item in the starting :inventory i.e. index 2 THIS CURRENTLY DOESN'T WORK.  INDEX 0 - BACKPACK - IS BEING SELECTED INSTEAD
+    assert_includes "Sword", last_response.body
+    # will get 200 status response to inventory_modify_item.erb, not 302 redirect to /inventory
     assert_equal 200, last_response.status
   end
 
@@ -253,6 +254,12 @@ class FFBCTest < Minitest::Test
     # expect a session :message to be displayed
     assert_equal "You've tried to delete an inventory item that doesn't exist at that index.", session[:message]
     # expect a redirect to /inventory
+    assert_equal 302, last_response.status
+  end
+
+  def test_asking_for_invalid_inventory_index_to_delete_returns_404
+    post "/inventory/delete/:inventory_index", {:inventory_index => "666"}, starting_rack_session
+    # expect my custom 404 response, which is itself a 302 redirect
     assert_equal 302, last_response.status
   end
 
