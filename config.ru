@@ -1,2 +1,2 @@
-require "./simple_fhrs.rb"
+require "./fighting_fantasy_books_companion.rb"
 run Sinatra::Application
