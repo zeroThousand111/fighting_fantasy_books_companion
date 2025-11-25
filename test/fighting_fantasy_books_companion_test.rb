@@ -126,8 +126,17 @@ class FFBCTest < Minitest::Test
 
   ### stats - test bad inputs for manual input
 
-
-
+  def test_bad_input_manual_stats_change_to_a_value_with_a_leading_zero
+    post "/stats/input-manual", {:new_skill => "012", :new_stamina => "24", :new_luck => "12" }, starting_rack_session
+    # expect starting values of three stats to remain unchanged
+    assert_nil session[:current_skill]
+    assert_nil session[:current_stamina]
+    assert_nil session[:current_luck]
+    # expect a session message to be generated and printed
+    assert_equal "Sorry, one or more attributes are outside the valid ranges.", session[:message]
+    # expect a redirect to /stats/input-manual
+    assert_equal 302, last_response.status
+  end
 
   ## routes - gold
 
@@ -175,6 +184,16 @@ class FFBCTest < Minitest::Test
 
   def test_bad_input_gold_value_change_from_0_to_empty_string
     post "/gold", {:updated_gold => ""}, starting_rack_session
+    # original value of gold should not change and should remain as 0
+    assert_equal "0", session[:gold]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the number of gold pieces should be a number that is zero or more.", session[:message]
+    # expect a redirect to /gold
+    assert_equal 302, last_response.status
+  end
+
+  def test_bad_input_gold_value_change_to_a_value_with_a_leading_zero
+    post "/gold", {:updated_gold => "099"}, starting_rack_session
     # original value of gold should not change and should remain as 0
     assert_equal "0", session[:gold]
     # a session message should be created for printing on redirect
@@ -456,6 +475,16 @@ class FFBCTest < Minitest::Test
   def test_bad_input_bookmark_value_change_from_1_to_empty_string
     post "/bookmark", {:updated_bookmark => ""}, starting_rack_session
     # original value of bookmark should not change and should remain as 1
+    assert_equal "1", session[:bookmark]
+    # a session message should be created for printing on redirect
+    assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]
+    # expect a redirect to /bookmark
+    assert_equal 302, last_response.status
+  end
+
+  def test_bad_input_bookmark_value_change_to_a_value_with_a_leading_zero
+    post "/bookmark", {:updated_bookmark => "0800"}, starting_rack_session
+    # original value of bookmark should not change and should remain as 0
     assert_equal "1", session[:bookmark]
     # a session message should be created for printing on redirect
     assert_equal "Sorry, the section number should be a number above zero and less than 801.", session[:message]

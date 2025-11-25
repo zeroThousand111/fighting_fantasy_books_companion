@@ -84,12 +84,16 @@ def is_a_numeric_string?(string)
   string.match?(/\A\d+\z/)
 end
 
+def is_not_a_numeric_string_starting_with_a_leading_zero?(string)
+  string.chars.first != "0"
+end
+
 def valid_bookmark_value?(bookmark_value)
-  bookmark_value.to_i > 0 && bookmark_value.to_i < 801 && is_a_numeric_string?(bookmark_value) && is_not_an_empty_string?(bookmark_value)
+  bookmark_value.to_i > 0 && bookmark_value.to_i < 801 && is_a_numeric_string?(bookmark_value) && is_not_an_empty_string?(bookmark_value) && is_not_a_numeric_string_starting_with_a_leading_zero?(bookmark_value)
 end
 
 def valid_gold_value?(gold_value)
-  gold_value.to_i >= 0 && is_a_numeric_string?(gold_value) && is_not_an_empty_string?(gold_value)
+  gold_value.to_i >= 0 && is_a_numeric_string?(gold_value) && is_not_an_empty_string?(gold_value) && is_not_a_numeric_string_starting_with_a_leading_zero?(gold_value)
 end
 
 def missing_attribute?(array_of_attribute_strings)
@@ -97,11 +101,11 @@ def missing_attribute?(array_of_attribute_strings)
 end
 
 def valid_manual_skill_and_luck?(attribute)
-  (0..12).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
+  (0..12).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute) && is_not_a_numeric_string_starting_with_a_leading_zero?(attribute)
 end
 
 def valid_manual_stamina?(attribute)
-  (0..24).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute)
+  (0..24).cover?(attribute.to_i) && is_a_numeric_string?(attribute) && is_not_an_empty_string?(attribute) && is_not_a_numeric_string_starting_with_a_leading_zero?(attribute)
 end
 
 def valid_manual_attributes?(array_of_attribute_strings) # return false unless all three attributes are within correct ranges
